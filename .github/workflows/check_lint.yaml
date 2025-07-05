@@ -1,0 +1,59 @@
+name: lint the code
+
+on:
+  pull_request:
+    branches: ["dev"]
+
+jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      backend1: ${{ steps.filter.outputs.backend1 }}
+      backend2: ${{ steps.filter.outputs.backend2 }}
+      frontend: ${{ steps.filter.outputs.frontend }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            backend1:
+              - 'backend1/**'
+            backend2:
+              - 'backend2/**'
+            frontend:
+              - 'frontend/**'
+
+  lint:
+    needs: detect-changes
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+          cache: "yarn"
+
+      - name: install dependency and run  lint
+        if: needs.detect-changes.outputs.backend1 == 'true'
+        working-directory: backend1
+        run: |
+          yarn install --frozen-lockfile
+          yarn lint
+
+      - name: install dependency and run lint
+        if: needs.detect-changes.outputs.backend2 == 'true'
+        working-directory: backend2
+        run: |
+          yarn install --frozen-lockfile
+          yarn lint
+
+      - name: install dependency and run lint
+        if: needs.detect-changes.outputs.frontend == 'true'
+        working-directory: frontend
+        run: |
+          yarn install --frozen-lockfile
+          yarn lint

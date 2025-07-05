@@ -15,29 +15,22 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup Node.js
+      - name: setup nodejs
         uses: actions/setup-node@v4
         with:
           node-version: lts/*
 
-      - name: Install Commitlint
+      - name: install commitlint
         run: npm install -D @commitlint/cli @commitlint/config-conventional
 
-      - name: Add Commitlint Config
+      - name: add commitlint config
         run: |
           echo "module.exports = { extends: ['@commitlint/config-conventional'] };" > commitlint.config.js
 
-      - name: Print versions
-        run: |
-          git --version
-          node --version
-          npm --version
-          npx commitlint --version
-
-      - name: Validate current commit (last commit) with commitlint
+      - name: validate current commit
         if: github.event_name == 'push'
         run: npx commitlint --last --verbose
 
-      - name: Validate PR commits with commitlint
+      - name: validate PR commits with commitlint
         if: github.event_name == 'pull_request'
         run: npx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
