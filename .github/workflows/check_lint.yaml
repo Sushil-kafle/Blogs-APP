@@ -41,18 +41,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Ssetup nodejs
         uses: actions/setup-node@v4
         with:
           node-version: "lts/*"
           cache: "yarn"
           cache-dependency-path: backend1/yarn.lock
 
-      - name: Install dependencies
+      - name: install dependency
         working-directory: backend1
         run: yarn install --frozen-lockfile
 
-      - name: Lint Backend1
+      - name: lint backend1
         working-directory: backend1
         run: yarn lint
 
@@ -64,18 +64,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: setup nodejs
         uses: actions/setup-node@v4
         with:
           node-version: "lts/*"
           cache: "yarn"
           cache-dependency-path: backend2/yarn.lock
 
-      - name: Install dependencies
+      - name: install dependency
         working-directory: backend2
         run: yarn install --frozen-lockfile
 
-      - name: Lint Backend2
+      - name: lint backend2
         working-directory: backend2
         run: yarn lint
 
@@ -87,17 +87,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: setup nodejs
         uses: actions/setup-node@v4
         with:
           node-version: "lts/*"
           cache: "yarn"
           cache-dependency-path: frontend/yarn.lock
 
-      - name: Install dependencies
+      - name: install dependency
         working-directory: frontend
         run: yarn install --frozen-lockfile
 
-      - name: Lint Frontend
+      - name: lint frontend
         working-directory: frontend
         run: yarn lint
