@@ -1,0 +1,113 @@
+name: Lint the Code
+
+permissions:
+  contents: read
+  pull-requests: read
+
+on:
+  pull_request:
+    branches: ["dev"]
+
+jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      backend1: ${{ steps.filter.outputs.backend1 }}
+      backend2: ${{ steps.filter.outputs.backend2 }}
+      frontend: ${{ steps.filter.outputs.frontend }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          filters: |
+            backend1:
+              - 'backend1/**'
+            backend2:
+              - 'backend2/**'
+            frontend:
+              - 'frontend/**'
+
+      - name: Debug - Show changed files
+        run: |
+          echo "Changed files in PR:"
+          git diff --name-only ${{ github.event.pull_request.base.sha }}..HEAD
+          echo ""
+          echo "Filter outputs:"
+          echo "backend1 changed: ${{ steps.filter.outputs.backend1 }}"
+          echo "backend2 changed: ${{ steps.filter.outputs.backend2 }}"
+          echo "frontend changed: ${{ steps.filter.outputs.frontend }}"
+
+  lint-backend1:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.backend1 == 'true'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+          cache: "yarn"
+          cache-dependency-path: backend1/yarn.lock
+
+      - name: Install dependencies
+        working-directory: backend1
+        run: yarn install --frozen-lockfile
+
+      - name: Lint Backend1
+        working-directory: backend1
+        run: yarn lint
+
+  lint-backend2:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.backend2 == 'true'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+          cache: "yarn"
+          cache-dependency-path: backend2/yarn.lock
+
+      - name: Install dependencies
+        working-directory: backend2
+        run: yarn install --frozen-lockfile
+
+      - name: Lint Backend2
+        working-directory: backend2
+        run: yarn lint
+
+  lint-frontend:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.frontend == 'true'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+          cache: "yarn"
+          cache-dependency-path: frontend/yarn.lock
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: yarn install --frozen-lockfile
+
+      - name: Lint Frontend
+        working-directory: frontend
+        run: yarn lint
