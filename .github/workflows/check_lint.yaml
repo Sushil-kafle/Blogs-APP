@@ -1,4 +1,4 @@
-name: lint the code
+name: Lint the Code
 
 permissions:
   contents: read
@@ -30,38 +30,53 @@ jobs:
             frontend:
               - 'frontend/**'
 
-  lint:
+  lint-backend1:
     needs: detect-changes
+    if: needs.detect-changes.outputs.backend1 == 'true'
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        include:
-          - service: backend1
-            changed: ${{ needs.detect-changes.outputs.backend1 }}
-          - service: backend2
-            changed: ${{ needs.detect-changes.outputs.backend2 }}
-          - service: frontend
-            changed: ${{ needs.detect-changes.outputs.frontend }}
-      fail-fast: false
-
     steps:
-      - name: Skip if no changes
-        if: matrix.changed != 'true'
-        run: echo "No changes in ${{ matrix.service }}. Skipping linting."
-
       - uses: actions/checkout@v4
-        if: matrix.changed == 'true'
-
       - uses: actions/setup-node@v4
-        if: matrix.changed == 'true'
         with:
           node-version: "lts/*"
           cache: "yarn"
-          cache-dependency-path: ${{ matrix.service }}/yarn.lock
+          cache-dependency-path: backend1/yarn.lock
+      - name: Install and Lint
+        working-directory: backend1
+        run: |
+          yarn install --frozen-lockfile
+          yarn lint
 
-      - name: Install dependencies and run lint
-        if: matrix.changed == 'true'
-        working-directory: ${{ matrix.service }}
+  lint-backend2:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.backend2 == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+          cache: "yarn"
+          cache-dependency-path: backend2/yarn.lock
+      - name: Install and Lint
+        working-directory: backend2
+        run: |
+          yarn install --frozen-lockfile
+          yarn lint
+
+  lint-frontend:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.frontend == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+          cache: "yarn"
+          cache-dependency-path: frontend/yarn.lock
+      - name: Install and Lint
+        working-directory: frontend
         run: |
           yarn install --frozen-lockfile
           yarn lint
