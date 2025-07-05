@@ -27,11 +27,11 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           filters: |
             backend1:
-              - 'backend1/**'
+              - 'backend1/src/**'
             backend2:
-              - 'backend2/**'
+              - 'backend2/src/**'
             frontend:
-              - 'frontend/**'
+              - 'frontend/src/**'
 
   lint-backend1:
     needs: detect-changes
