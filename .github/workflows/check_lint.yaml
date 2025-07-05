@@ -33,6 +33,21 @@ jobs:
   lint:
     needs: detect-changes
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        service: [backend1, backend2, frontend]
+        include:
+          - service: backend1
+            changed: ${{ needs.detect-changes.outputs.backend1 }}
+          - service: backend2
+            changed: ${{ needs.detect-changes.outputs.backend2 }}
+          - service: frontend
+            changed: ${{ needs.detect-changes.outputs.frontend }}
+      fail-fast: false
+
+    if: matrix.changed == 'true'
+
     steps:
       - uses: actions/checkout@v4
 
@@ -40,24 +55,10 @@ jobs:
         with:
           node-version: "lts/*"
           cache: "yarn"
+          cache-dependency-path: ${{ matrix.service }}/yarn.lock
 
-      - name: install dependency and run  lint
-        if: needs.detect-changes.outputs.backend1 == 'true'
-        working-directory: backend1
-        run: |
-          yarn install --frozen-lockfile
-          yarn lint
-
-      - name: install dependency and run lint
-        if: needs.detect-changes.outputs.backend2 == 'true'
-        working-directory: backend2
-        run: |
-          yarn install --frozen-lockfile
-          yarn lint
-
-      - name: install dependency and run lint
-        if: needs.detect-changes.outputs.frontend == 'true'
-        working-directory: frontend
+      - name: Install dependencies and run lint
+        working-directory: ${{ matrix.service }}
         run: |
           yarn install --frozen-lockfile
           yarn lint
