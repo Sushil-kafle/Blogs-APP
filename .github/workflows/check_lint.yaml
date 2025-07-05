@@ -33,16 +33,6 @@ jobs:
             frontend:
               - 'frontend/**'
 
-      - name: Debug - Show changed files
-        run: |
-          echo "Changed files in PR:"
-          git diff --name-only ${{ github.event.pull_request.base.sha }}..HEAD
-          echo ""
-          echo "Filter outputs:"
-          echo "backend1 changed: ${{ steps.filter.outputs.backend1 }}"
-          echo "backend2 changed: ${{ steps.filter.outputs.backend2 }}"
-          echo "frontend changed: ${{ steps.filter.outputs.frontend }}"
-
   lint-backend1:
     needs: detect-changes
     if: needs.detect-changes.outputs.backend1 == 'true'
