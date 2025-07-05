@@ -22,7 +22,7 @@ jobs:
       - uses: dorny/paths-filter@v3
         id: filter
         with:
-          base: ${{ github.event.pull_request.base.sha }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           filters: |
             backend1:
               - 'backend1/**'
@@ -31,8 +31,12 @@ jobs:
             frontend:
               - 'frontend/**'
 
-      - name: Debug - Print what changed
+      - name: Debug - Show changed files
         run: |
+          echo "Changed files:"
+          git diff --name-only HEAD~1 HEAD
+          echo ""
+          echo "Filter outputs:"
           echo "backend1 changed: ${{ steps.filter.outputs.backend1 }}"
           echo "backend2 changed: ${{ steps.filter.outputs.backend2 }}"
           echo "frontend changed: ${{ steps.filter.outputs.frontend }}"
