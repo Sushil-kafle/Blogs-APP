@@ -1,0 +1,6 @@
+{
+    "sonarlint.connectedMode.project": {
+        "connectionId": "http-192-168-209-244-9000-",
+        "projectKey": "blog_project"
+    }
+}
