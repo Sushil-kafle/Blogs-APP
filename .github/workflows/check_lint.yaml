@@ -71,6 +71,11 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
+      - name: Setup Node.js 18 for sonar-report
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
       - name: Install sonar-report tool
         run: yarn global add sonar-report
 
@@ -126,6 +131,11 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
+      - name: Setup Node.js 18 for sonar-report
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
       - name: Install sonar-report tool
         run: yarn global add sonar-report
 
@@ -180,6 +190,11 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
+      - name: Setup Node.js 18 for sonar-report
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
 
       - name: Install sonar-report tool
         run: yarn global add sonar-report
