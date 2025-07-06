@@ -80,10 +80,12 @@ jobs:
         run: yarn global add sonar-report
 
       - name: Generate HTML report for backend1
-        run: npx sonar-report -k backend1 \
-          -t ${{ secrets.SONAR_TOKEN }} \
-          -u ${{ secrets.SONAR_HOST_URL }} \
-          -o ../sonar-report/backend-1-report.html
+        run: |
+          mkdir -p sonar-report
+          npx sonar-report --projectKey backend1 \
+                          --token ${{ secrets.SONAR_TOKEN }} \
+                          --url ${{ secrets.SONAR_HOST_URL }} \
+                          --output sonar-report/backend-1-report.html
 
       - name: Upload HTML report for backend1
         uses: actions/upload-artifact@v4
@@ -138,10 +140,12 @@ jobs:
         run: yarn global add sonar-report
 
       - name: Generate HTML report for backend2
-        run: npx sonar-report -k backend2 \
-          -t ${{ secrets.SONAR_TOKEN }} \
-          -u ${{ secrets.SONAR_HOST_URL }} \
-          -o ../sonar-report/backend-2-report.html
+        run: |
+          mkdir -p sonar-report
+          npx sonar-report --projectKey backend2 \
+                          --token ${{ secrets.SONAR_TOKEN }} \
+                          --url ${{ secrets.SONAR_HOST_URL }} \
+                          --output sonar-report/backend-2-report.html
 
       - name: Upload HTML report for backend2
         uses: actions/upload-artifact@v4
@@ -196,10 +200,12 @@ jobs:
         run: yarn global add sonar-report
 
       - name: Generate HTML report for frontend
-        run: npx sonar-report -k frontend \
-          -t ${{ secrets.SONAR_TOKEN }} \
-          -u ${{ secrets.SONAR_HOST_URL }} \
-          -o ../sonar-report/frontend-report.html
+        run: |
+          mkdir -p sonar-report
+          npx sonar-report --projectKey frontend \
+            --token ${{ secrets.SONAR_TOKEN }} \
+            --url ${{ secrets.SONAR_HOST_URL }} \
+            --output sonar-report/frontend-report.html
 
       - name: Upload HTML report for frontend
         uses: actions/upload-artifact@v4
