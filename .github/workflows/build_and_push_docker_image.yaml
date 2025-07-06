@@ -32,6 +32,13 @@ jobs:
               - 'backend2/**'
             frontend:
               - 'frontend/**'
+              -
+      - name: Determine Merge Base
+        run: |
+          MERGE_BASE=$(git merge-base origin/dev HEAD)
+          echo "Merge base: $MERGE_BASE"
+          git diff --name-only $MERGE_BASE HEAD > changed_files.txt
+          cat changed_files.txt
 
       - name: Debug Filter Outputs
         run: |
