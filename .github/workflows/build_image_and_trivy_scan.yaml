@@ -40,14 +40,6 @@ jobs:
             frontend:
               - 'frontend/**'
 
-      - name: Determine Merge Base
-        run: |
-          MERGE_BASE=$(git merge-base origin/dev HEAD)
-          echo "Merge base: $MERGE_BASE"
-          git diff --name-only $MERGE_BASE HEAD > changed_files.txt
-          cat changed_files.txt
-
-
   build-and-push-backend1:
     needs: detect-changes
     if: needs.detect-changes.outputs.backend1 == 'true'
@@ -77,12 +69,6 @@ jobs:
           image-ref: "docker.io/${{ secrets.DOCKER_USERNAME }}/backend1:dev-${{ github.run_number }}"
           format: "sarif"
           output: "trivy-backend1-results.sarif"
-
-      - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v3
-        if: always()
-        with:
-          sarif_file: "trivy-backend1-results.sarif"
 
       - name: Run Trivy vulnerability scanner (HTML report)
         uses: aquasecurity/trivy-action@master
@@ -139,12 +125,6 @@ jobs:
           format: "sarif"
           output: "trivy-backend2-results.sarif"
 
-      - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v3
-        if: always()
-        with:
-          sarif_file: "trivy-backend2-results.sarif"
-
       - name: Run Trivy vulnerability scanner (HTML report)
         uses: aquasecurity/trivy-action@master
         with:
@@ -199,12 +179,6 @@ jobs:
           image-ref: "docker.io/${{ secrets.DOCKER_USERNAME }}/frontend:dev-${{ github.run_number }}"
           format: "sarif"
           output: "trivy-frontend-results.sarif"
-
-      - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v3
-        if: always()
-        with:
-          sarif_file: "trivy-frontend-results.sarif"
 
       - name: Run Trivy vulnerability scanner (HTML report)
         uses: aquasecurity/trivy-action@master
