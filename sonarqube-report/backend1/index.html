@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>SonarQube Vulnerability Report</title>
+  <style>
+    /*
+	The sss stylesheet is released under the MIT license.
+	<https://github.com/Thiht/sss>
+	*/
+    pre,
+td,
+th {
+    padding: 5px 10px
+}
+
+code,
+hr,
+pre,
+thead {
+    background: #EEE
+}
+
+body {
+    color: #333;
+    font-family: 'Segoe UI', 'Lucida Grande', Helvetica, sans-serif;
+    line-height: 1.5;
+}
+
+div.summup {
+    max-width: 800px;
+    margin: 50px auto;
+}
+
+div.detail {
+    padding: 20px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 400;
+    line-height: 1em;
+    margin: 20px 0
+}
+
+h1 {
+    font-size: 2.25em
+}
+
+h2 {
+    font-size: 1.75em
+}
+
+h3 {
+    font-size: 1.5em
+}
+
+h4,
+h5,
+h6 {
+    font-size: 1.25em
+}
+
+a {
+    color: #08C;
+    text-decoration: none
+}
+
+a:focus,
+a:hover {
+    text-decoration: underline
+}
+
+a:visited {
+    color: #058
+}
+
+img {
+    max-width: 100%
+}
+
+li+li {
+    margin-top: 3px
+}
+
+dt {
+    font-weight: 700
+}
+
+code {
+    font-family: Consolas, "Lucida Console", monospace;
+    padding: 1px 5px
+}
+
+pre {
+    white-space: pre-wrap
+}
+
+pre code {
+    padding: 0
+}
+
+blockquote {
+    border-left: 5px solid #EEE;
+    margin: 0;
+    padding: 0 10px
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%
+}
+
+table+table {
+    margin-top: 1em
+}
+
+thead {
+    text-align: left
+}
+
+td,
+th {
+    border: 1px solid #EEE
+}
+
+td.component {
+    word-break: break-all;
+}
+
+hr {
+    border: 0;
+    height: 1px
+}
+
+.banner {
+    text-align: center;
+}
+
+canvas {
+    display: block;
+    margin: 10px auto;
+}
+
+.statusOK {
+    background-color: #0a0
+}
+
+.statusERROR {
+    background-color: #d4333f
+}
+
+.sevHIGH {
+    background-color: #d43223
+}
+
+.sevMEDIUM {
+    background-color: #f39c12
+}
+
+.sevLOW {
+    background-color: #319ddb
+}
+
+.hidden {
+    display: none;
+}
+
+.rulestable {
+    table-layout: fixed;
+    word-wrap: break-word
+}
+  </style>
+</head>
+
+<body>
+  <div class="summup">
+    <!-- insert your company banner here -->
+    <!--
+		<p class="banner">
+			<a href="https://www.soprasteria.com/" target="_blank">
+				<img src="https://upload.wikimedia.org/wikipedia/en/thumb/0/02/Sopra_Steria_logo.svg/1280px-Sopra_Steria_logo.svg.png" alt="Sopra Steria" height="50">
+			</a>
+		</p>
+		-->
+
+    <h1>SonarQube Vulnerability Report</h1>
+
+    <dl>
+      <dt>Report Generated On</dt>
+      <dd>
+        Sunday, Jul 6, 2025
+      </dd>
+
+      <dt>Project Name/URL</dt>
+      <dd>
+        <a href="https://dc19-160-250-255-101.ngrok-free.app/dashboard?id=backend1" target="_blank">
+          backend1
+        </a>
+      </dd>
+
+      <dt>Application</dt>
+      <dd>
+        backend1
+      </dd>
+
+      <dt>Release</dt>
+      <dd>
+        1.0.0
+      </dd>
+
+      <dt>Branch</dt>
+      <dd>
+        main
+      </dd>
+
+      <dt>Delta Analysis</dt>
+      <dd>
+        No
+      </dd>
+
+      
+
+      <dt>Coverage</dt>
+      <dd>
+        0.0
+      </dd>
+
+      
+
+      
+    </dl>
+
+    
+    <h2>Quality Gate Status: OK since 2025-07-06
+    </h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Metric</th>
+          <th>Value - Threshold</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        
+        <tr>
+          <td style="background-color:#0a0"></td>
+          <td>
+            new duplicated lines density
+          </td>
+          <td>
+            0.0%
+            &gt;
+            3%
+          </td>
+        </tr>
+        
+        <tr>
+          <td style="background-color:#0a0"></td>
+          <td>
+            new violations
+          </td>
+          <td>
+            
+            &gt;
+            
+          </td>
+        </tr>
+        
+
+      </tbody>
+    </table>
+    
+
+    <h2>Summary of the Detected Vulnerabilities
+    </h2>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Severity</th>
+          <th>Number of Issues</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="sevHIGH"></td>
+          <td>HIGH</td>
+          <td>
+            0
+          </td>
+        </tr>
+        <tr>
+          <td class="sevMEDIUM"></td>
+          <td>MEDIUM</td>
+          <td>
+            0
+          </td>
+        </tr>
+        <tr>
+          <td class="sevLOW"></td>
+          <td>LOW</td>
+          <td>
+            1
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    
+    <canvas id="vulnerabilitiesPieChart" width="200" height="200"></canvas>
+    
+  </div>
+
+  <div class=detail>
+    
+    <h2>Detail of the Detected Vulnerabilities
+    </h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Rule</th>
+          <th>Severity</th>
+          <th>Component</th>
+          <th>Line</th>
+          <th>Description</th>
+          <th>Message</th>
+          <th class="hidden">Key</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        <tr>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/coding_rules#rule_key=typescript:S1874">
+              typescript:S1874
+            </a></td>
+          <td>
+            
+            MINOR
+            
+          </td>
+          <td class="component">
+            src/middlewares/errorHandler.ts
+          </td>
+          <td>
+            35
+          </td>
+          <td>
+            Deprecated APIs should not be used
+          </td>
+          <td>
+            &#39;connection&#39; is deprecated.
+          </td>
+          <td class="hidden">
+            e3065c5e-2df8-4d85-849c-873bfe821a17
+          </td>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/project/issues?branch=main&id=backend1&issues=e3065c5e-2df8-4d85-849c-873bfe821a17&open=e3065c5e-2df8-4d85-849c-873bfe821a17">OPEN</a></td>
+        </tr>
+        
+        <tr>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/coding_rules#rule_key=typescript:S1533">
+              typescript:S1533
+            </a></td>
+          <td>
+            
+            MINOR
+            
+          </td>
+          <td class="component">
+            src/middlewares/errorHandler.ts
+          </td>
+          <td>
+            30
+          </td>
+          <td>
+            Wrapper objects should not be used for primitive types
+          </td>
+          <td>
+            Replace this &#34;Number&#34; wrapper object with primitive type &#34;number&#34;.
+          </td>
+          <td class="hidden">
+            dcf56cac-2ad0-4e5f-9c06-61fd56797137
+          </td>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/project/issues?branch=main&id=backend1&issues=dcf56cac-2ad0-4e5f-9c06-61fd56797137&open=dcf56cac-2ad0-4e5f-9c06-61fd56797137">OPEN</a></td>
+        </tr>
+        
+        <tr>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/coding_rules#rule_key=typescript:S1444">
+              typescript:S1444
+            </a></td>
+          <td>
+            
+            MINOR
+            
+          </td>
+          <td class="component">
+            src/models/UserModel.ts
+          </td>
+          <td>
+            4
+          </td>
+          <td>
+            Public &#34;static&#34; fields should be read-only
+          </td>
+          <td>
+            Make this public static property readonly.
+          </td>
+          <td class="hidden">
+            47fd891d-a134-48df-8d09-b0f5e808546b
+          </td>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/project/issues?branch=main&id=backend1&issues=47fd891d-a134-48df-8d09-b0f5e808546b&open=47fd891d-a134-48df-8d09-b0f5e808546b">OPEN</a></td>
+        </tr>
+        
+        <tr>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/coding_rules#rule_key=typescript:S6606">
+              typescript:S6606
+            </a></td>
+          <td>
+            
+            MINOR
+            
+          </td>
+          <td class="component">
+            src/db/knex.ts
+          </td>
+          <td>
+            8
+          </td>
+          <td>
+            Nullish coalescing should be preferred
+          </td>
+          <td>
+            Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.
+          </td>
+          <td class="hidden">
+            38eb088f-0ae8-4827-9e7c-158bbde57d05
+          </td>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/project/issues?branch=main&id=backend1&issues=38eb088f-0ae8-4827-9e7c-158bbde57d05&open=38eb088f-0ae8-4827-9e7c-158bbde57d05">OPEN</a></td>
+        </tr>
+        
+        <tr>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/coding_rules#rule_key=typescript:S1874">
+              typescript:S1874
+            </a></td>
+          <td>
+            
+            MINOR
+            
+          </td>
+          <td class="component">
+            src/middlewares/logger_middleware.ts
+          </td>
+          <td>
+            10
+          </td>
+          <td>
+            Deprecated APIs should not be used
+          </td>
+          <td>
+            &#39;connection&#39; is deprecated.
+          </td>
+          <td class="hidden">
+            20ecd834-90a4-444e-9e48-0f6ad5093652
+          </td>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/project/issues?branch=main&id=backend1&issues=20ecd834-90a4-444e-9e48-0f6ad5093652&open=20ecd834-90a4-444e-9e48-0f6ad5093652">OPEN</a></td>
+        </tr>
+        
+        <tr>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/coding_rules#rule_key=typescript:S6606">
+              typescript:S6606
+            </a></td>
+          <td>
+            
+            MINOR
+            
+          </td>
+          <td class="component">
+            src/index.ts
+          </td>
+          <td>
+            40
+          </td>
+          <td>
+            Nullish coalescing should be preferred
+          </td>
+          <td>
+            Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.
+          </td>
+          <td class="hidden">
+            02c462ea-0839-4a13-b9cd-114f400f65cd
+          </td>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/project/issues?branch=main&id=backend1&issues=02c462ea-0839-4a13-b9cd-114f400f65cd&open=02c462ea-0839-4a13-b9cd-114f400f65cd">OPEN</a></td>
+        </tr>
+        
+        <tr>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/coding_rules#rule_key=typescript:S5689">
+              typescript:S5689
+            </a></td>
+          <td>
+            
+            LOW
+            
+          </td>
+          <td class="component">
+            src/index.ts
+          </td>
+          <td>
+            17
+          </td>
+          <td>
+            Disclosing fingerprints from web application technologies is security-sensitive
+          </td>
+          <td>
+            This framework implicitly discloses version information by default. Make sure it is safe here.
+          </td>
+          <td class="hidden">
+            40ad6024-f944-4b5d-a26b-63780b301276
+          </td>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/security_hotspots?branch=main&id=backend1&hotspots=40ad6024-f944-4b5d-a26b-63780b301276">TO_REVIEW</a></td>
+        </tr>
+        
+      </tbody>
+    </table>
+
+    
+
+    
+  </div>
+
+  
+
+  <script>
+    var canvas = document.getElementById("vulnerabilitiesPieChart");
+    var ctx = canvas.getContext("2d");
+
+    var data = [
+      0,
+      0,
+      1
+    ];
+    var total = data.reduce(function(sum, n) {
+      return sum + n;
+    })
+    var colors = ['#d43223', '#f39c12', '#319ddb'];
+
+    for (var i = 0, lastend = 0; i < data.length; i++) {
+      ctx.fillStyle = colors[i];
+      ctx.beginPath();
+      ctx.moveTo(canvas.width / 2, canvas.height / 2);
+      ctx.arc(canvas.width / 2, canvas.height / 2, canvas.height / 2, lastend, lastend + (Math.PI * 2 * (data[i] /
+        total)), false);
+      ctx.lineTo(canvas.width / 2, canvas.height / 2);
+      ctx.fill();
+      lastend += Math.PI * 2 * (data[i] / total);
+    }
+  </script>
+
+  
+</body>
+
+</html>

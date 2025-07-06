@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>SonarQube Vulnerability Report</title>
+  <style>
+    /*
+	The sss stylesheet is released under the MIT license.
+	<https://github.com/Thiht/sss>
+	*/
+    pre,
+td,
+th {
+    padding: 5px 10px
+}
+
+code,
+hr,
+pre,
+thead {
+    background: #EEE
+}
+
+body {
+    color: #333;
+    font-family: 'Segoe UI', 'Lucida Grande', Helvetica, sans-serif;
+    line-height: 1.5;
+}
+
+div.summup {
+    max-width: 800px;
+    margin: 50px auto;
+}
+
+div.detail {
+    padding: 20px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 400;
+    line-height: 1em;
+    margin: 20px 0
+}
+
+h1 {
+    font-size: 2.25em
+}
+
+h2 {
+    font-size: 1.75em
+}
+
+h3 {
+    font-size: 1.5em
+}
+
+h4,
+h5,
+h6 {
+    font-size: 1.25em
+}
+
+a {
+    color: #08C;
+    text-decoration: none
+}
+
+a:focus,
+a:hover {
+    text-decoration: underline
+}
+
+a:visited {
+    color: #058
+}
+
+img {
+    max-width: 100%
+}
+
+li+li {
+    margin-top: 3px
+}
+
+dt {
+    font-weight: 700
+}
+
+code {
+    font-family: Consolas, "Lucida Console", monospace;
+    padding: 1px 5px
+}
+
+pre {
+    white-space: pre-wrap
+}
+
+pre code {
+    padding: 0
+}
+
+blockquote {
+    border-left: 5px solid #EEE;
+    margin: 0;
+    padding: 0 10px
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%
+}
+
+table+table {
+    margin-top: 1em
+}
+
+thead {
+    text-align: left
+}
+
+td,
+th {
+    border: 1px solid #EEE
+}
+
+td.component {
+    word-break: break-all;
+}
+
+hr {
+    border: 0;
+    height: 1px
+}
+
+.banner {
+    text-align: center;
+}
+
+canvas {
+    display: block;
+    margin: 10px auto;
+}
+
+.statusOK {
+    background-color: #0a0
+}
+
+.statusERROR {
+    background-color: #d4333f
+}
+
+.sevHIGH {
+    background-color: #d43223
+}
+
+.sevMEDIUM {
+    background-color: #f39c12
+}
+
+.sevLOW {
+    background-color: #319ddb
+}
+
+.hidden {
+    display: none;
+}
+
+.rulestable {
+    table-layout: fixed;
+    word-wrap: break-word
+}
+  </style>
+</head>
+
+<body>
+  <div class="summup">
+    <!-- insert your company banner here -->
+    <!--
+		<p class="banner">
+			<a href="https://www.soprasteria.com/" target="_blank">
+				<img src="https://upload.wikimedia.org/wikipedia/en/thumb/0/02/Sopra_Steria_logo.svg/1280px-Sopra_Steria_logo.svg.png" alt="Sopra Steria" height="50">
+			</a>
+		</p>
+		-->
+
+    <h1>SonarQube Vulnerability Report</h1>
+
+    <dl>
+      <dt>Report Generated On</dt>
+      <dd>
+        Sunday, Jul 6, 2025
+      </dd>
+
+      <dt>Project Name/URL</dt>
+      <dd>
+        <a href="https://dc19-160-250-255-101.ngrok-free.app/dashboard?id=frontend" target="_blank">
+          frontend
+        </a>
+      </dd>
+
+      <dt>Application</dt>
+      <dd>
+        frontend
+      </dd>
+
+      <dt>Release</dt>
+      <dd>
+        1.0.0
+      </dd>
+
+      <dt>Branch</dt>
+      <dd>
+        main
+      </dd>
+
+      <dt>Delta Analysis</dt>
+      <dd>
+        No
+      </dd>
+
+      
+
+      <dt>Coverage</dt>
+      <dd>
+        0.0
+      </dd>
+
+      
+
+      
+    </dl>
+
+    
+    <h2>Quality Gate Status: OK since 2025-07-06
+    </h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Metric</th>
+          <th>Value - Threshold</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        
+        <tr>
+          <td style="background-color:#0a0"></td>
+          <td>
+            new violations
+          </td>
+          <td>
+            
+            &gt;
+            
+          </td>
+        </tr>
+        
+
+      </tbody>
+    </table>
+    
+
+    <h2>Summary of the Detected Vulnerabilities
+    </h2>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Severity</th>
+          <th>Number of Issues</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="sevHIGH"></td>
+          <td>HIGH</td>
+          <td>
+            0
+          </td>
+        </tr>
+        <tr>
+          <td class="sevMEDIUM"></td>
+          <td>MEDIUM</td>
+          <td>
+            0
+          </td>
+        </tr>
+        <tr>
+          <td class="sevLOW"></td>
+          <td>LOW</td>
+          <td>
+            0
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    
+    <canvas id="vulnerabilitiesPieChart" width="200" height="200"></canvas>
+    
+  </div>
+
+  <div class=detail>
+    
+    <h2>Detail of the Detected Vulnerabilities
+    </h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Rule</th>
+          <th>Severity</th>
+          <th>Component</th>
+          <th>Line</th>
+          <th>Description</th>
+          <th>Message</th>
+          <th class="hidden">Key</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        <tr>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/coding_rules#rule_key=css:S125">
+              css:S125
+            </a></td>
+          <td>
+            
+            MAJOR
+            
+          </td>
+          <td class="component">
+            src/index.css
+          </td>
+          <td>
+            1
+          </td>
+          <td>
+            Sections of code should not be commented out
+          </td>
+          <td>
+            Remove this commented out code.
+          </td>
+          <td class="hidden">
+            d8cd2ac4-b758-4a38-a7f3-d0b5ad43bad3
+          </td>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/project/issues?branch=main&id=frontend&issues=d8cd2ac4-b758-4a38-a7f3-d0b5ad43bad3&open=d8cd2ac4-b758-4a38-a7f3-d0b5ad43bad3">OPEN</a></td>
+        </tr>
+        
+        <tr>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/coding_rules#rule_key=css:S125">
+              css:S125
+            </a></td>
+          <td>
+            
+            MAJOR
+            
+          </td>
+          <td class="component">
+            src/App.css
+          </td>
+          <td>
+            1
+          </td>
+          <td>
+            Sections of code should not be commented out
+          </td>
+          <td>
+            Remove this commented out code.
+          </td>
+          <td class="hidden">
+            c0357f0b-04f1-418f-9200-d44a75653e65
+          </td>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/project/issues?branch=main&id=frontend&issues=c0357f0b-04f1-418f-9200-d44a75653e65&open=c0357f0b-04f1-418f-9200-d44a75653e65">OPEN</a></td>
+        </tr>
+        
+        <tr>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/coding_rules#rule_key=typescript:S125">
+              typescript:S125
+            </a></td>
+          <td>
+            
+            MAJOR
+            
+          </td>
+          <td class="component">
+            src/pages/CreateBlog.tsx
+          </td>
+          <td>
+            334
+          </td>
+          <td>
+            Sections of code should not be commented out
+          </td>
+          <td>
+            Remove this commented out code.
+          </td>
+          <td class="hidden">
+            5c2a3026-e1b2-4283-ba0a-d7b1e3b97259
+          </td>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/project/issues?branch=main&id=frontend&issues=5c2a3026-e1b2-4283-ba0a-d7b1e3b97259&open=5c2a3026-e1b2-4283-ba0a-d7b1e3b97259">OPEN</a></td>
+        </tr>
+        
+        <tr>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/coding_rules#rule_key=typescript:S125">
+              typescript:S125
+            </a></td>
+          <td>
+            
+            MAJOR
+            
+          </td>
+          <td class="component">
+            src/pages/CreateBlog.tsx
+          </td>
+          <td>
+            39
+          </td>
+          <td>
+            Sections of code should not be commented out
+          </td>
+          <td>
+            Remove this commented out code.
+          </td>
+          <td class="hidden">
+            3e3d6041-eabf-49d3-96e4-239c6090f67d
+          </td>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/project/issues?branch=main&id=frontend&issues=3e3d6041-eabf-49d3-96e4-239c6090f67d&open=3e3d6041-eabf-49d3-96e4-239c6090f67d">OPEN</a></td>
+        </tr>
+        
+        <tr>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/coding_rules#rule_key=typescript:S1854">
+              typescript:S1854
+            </a></td>
+          <td>
+            
+            MAJOR
+            
+          </td>
+          <td class="component">
+            src/pages/CompleteSignup.tsx
+          </td>
+          <td>
+            26
+          </td>
+          <td>
+            Unused assignments should be removed
+          </td>
+          <td>
+            Remove this useless assignment to variable &#34;user&#34;.
+          </td>
+          <td class="hidden">
+            2fd5e907-1a90-48b0-a75a-a861c8b06cb1
+          </td>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/project/issues?branch=main&id=frontend&issues=2fd5e907-1a90-48b0-a75a-a861c8b06cb1&open=2fd5e907-1a90-48b0-a75a-a861c8b06cb1">OPEN</a></td>
+        </tr>
+        
+        <tr>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/coding_rules#rule_key=typescript:S125">
+              typescript:S125
+            </a></td>
+          <td>
+            
+            MAJOR
+            
+          </td>
+          <td class="component">
+            src/pages/CreateBlog.tsx
+          </td>
+          <td>
+            33
+          </td>
+          <td>
+            Sections of code should not be commented out
+          </td>
+          <td>
+            Remove this commented out code.
+          </td>
+          <td class="hidden">
+            0faa7e34-3c5d-4f4d-bf8a-364cfb9524e9
+          </td>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/project/issues?branch=main&id=frontend&issues=0faa7e34-3c5d-4f4d-bf8a-364cfb9524e9&open=0faa7e34-3c5d-4f4d-bf8a-364cfb9524e9">OPEN</a></td>
+        </tr>
+        
+        <tr>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/coding_rules#rule_key=typescript:S3863">
+              typescript:S3863
+            </a></td>
+          <td>
+            
+            MINOR
+            
+          </td>
+          <td class="component">
+            src/pages/SingleBlog.tsx
+          </td>
+          <td>
+            2
+          </td>
+          <td>
+            Imports from the same module should be merged
+          </td>
+          <td>
+            &#39;/github/workspace/frontend/node_modules/react-router-dom/dist/index.js&#39; imported multiple times.
+          </td>
+          <td class="hidden">
+            fba98630-20b2-4585-96ff-03a23303c463
+          </td>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/project/issues?branch=main&id=frontend&issues=fba98630-20b2-4585-96ff-03a23303c463&open=fba98630-20b2-4585-96ff-03a23303c463">OPEN</a></td>
+        </tr>
+        
+        <tr>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/coding_rules#rule_key=typescript:S6606">
+              typescript:S6606
+            </a></td>
+          <td>
+            
+            MINOR
+            
+          </td>
+          <td class="component">
+            src/pages/CompleteSignup.tsx
+          </td>
+          <td>
+            41
+          </td>
+          <td>
+            Nullish coalescing should be preferred
+          </td>
+          <td>
+            Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.
+          </td>
+          <td class="hidden">
+            cc9804fe-3851-4d5b-8a2c-7662e168a6a9
+          </td>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/project/issues?branch=main&id=frontend&issues=cc9804fe-3851-4d5b-8a2c-7662e168a6a9&open=cc9804fe-3851-4d5b-8a2c-7662e168a6a9">OPEN</a></td>
+        </tr>
+        
+        <tr>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/coding_rules#rule_key=typescript:S6606">
+              typescript:S6606
+            </a></td>
+          <td>
+            
+            MINOR
+            
+          </td>
+          <td class="component">
+            src/pages/CreateBlog.tsx
+          </td>
+          <td>
+            121
+          </td>
+          <td>
+            Nullish coalescing should be preferred
+          </td>
+          <td>
+            Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.
+          </td>
+          <td class="hidden">
+            95a5c127-6f0a-47ff-9293-ab47d200a3f3
+          </td>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/project/issues?branch=main&id=frontend&issues=95a5c127-6f0a-47ff-9293-ab47d200a3f3&open=95a5c127-6f0a-47ff-9293-ab47d200a3f3">OPEN</a></td>
+        </tr>
+        
+        <tr>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/coding_rules#rule_key=typescript:S6606">
+              typescript:S6606
+            </a></td>
+          <td>
+            
+            MINOR
+            
+          </td>
+          <td class="component">
+            src/hooks/useBlogData.tsx
+          </td>
+          <td>
+            105
+          </td>
+          <td>
+            Nullish coalescing should be preferred
+          </td>
+          <td>
+            Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.
+          </td>
+          <td class="hidden">
+            900cdedf-60fc-40aa-9432-973e06d8abe9
+          </td>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/project/issues?branch=main&id=frontend&issues=900cdedf-60fc-40aa-9432-973e06d8abe9&open=900cdedf-60fc-40aa-9432-973e06d8abe9">OPEN</a></td>
+        </tr>
+        
+        <tr>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/coding_rules#rule_key=typescript:S1128">
+              typescript:S1128
+            </a></td>
+          <td>
+            
+            MINOR
+            
+          </td>
+          <td class="component">
+            src/pages/CreateBlog.tsx
+          </td>
+          <td>
+            24
+          </td>
+          <td>
+            Unnecessary imports should be removed
+          </td>
+          <td>
+            Remove this unused import of &#39;marked&#39;.
+          </td>
+          <td class="hidden">
+            8dd80a06-6662-4561-b5a6-e04ea2ac1a32
+          </td>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/project/issues?branch=main&id=frontend&issues=8dd80a06-6662-4561-b5a6-e04ea2ac1a32&open=8dd80a06-6662-4561-b5a6-e04ea2ac1a32">OPEN</a></td>
+        </tr>
+        
+        <tr>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/coding_rules#rule_key=typescript:S6606">
+              typescript:S6606
+            </a></td>
+          <td>
+            
+            MINOR
+            
+          </td>
+          <td class="component">
+            src/pages/SingleBlog.tsx
+          </td>
+          <td>
+            140
+          </td>
+          <td>
+            Nullish coalescing should be preferred
+          </td>
+          <td>
+            Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.
+          </td>
+          <td class="hidden">
+            8b6c7da6-33f8-49e1-b3e4-17a28ef62c18
+          </td>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/project/issues?branch=main&id=frontend&issues=8b6c7da6-33f8-49e1-b3e4-17a28ef62c18&open=8b6c7da6-33f8-49e1-b3e4-17a28ef62c18">OPEN</a></td>
+        </tr>
+        
+        <tr>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/coding_rules#rule_key=typescript:S6606">
+              typescript:S6606
+            </a></td>
+          <td>
+            
+            MINOR
+            
+          </td>
+          <td class="component">
+            src/pages/CreateBlog.tsx
+          </td>
+          <td>
+            165
+          </td>
+          <td>
+            Nullish coalescing should be preferred
+          </td>
+          <td>
+            Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.
+          </td>
+          <td class="hidden">
+            736876ac-2a0c-460c-9d7d-bc9f1ebfe811
+          </td>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/project/issues?branch=main&id=frontend&issues=736876ac-2a0c-460c-9d7d-bc9f1ebfe811&open=736876ac-2a0c-460c-9d7d-bc9f1ebfe811">OPEN</a></td>
+        </tr>
+        
+        <tr>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/coding_rules#rule_key=typescript:S6606">
+              typescript:S6606
+            </a></td>
+          <td>
+            
+            MINOR
+            
+          </td>
+          <td class="component">
+            src/pages/CreateBlog.tsx
+          </td>
+          <td>
+            148
+          </td>
+          <td>
+            Nullish coalescing should be preferred
+          </td>
+          <td>
+            Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.
+          </td>
+          <td class="hidden">
+            6ab4ef37-0b5a-4825-89d5-1854426dd2d8
+          </td>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/project/issues?branch=main&id=frontend&issues=6ab4ef37-0b5a-4825-89d5-1854426dd2d8&open=6ab4ef37-0b5a-4825-89d5-1854426dd2d8">OPEN</a></td>
+        </tr>
+        
+        <tr>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/coding_rules#rule_key=typescript:S3863">
+              typescript:S3863
+            </a></td>
+          <td>
+            
+            MINOR
+            
+          </td>
+          <td class="component">
+            src/pages/CreateBlog.tsx
+          </td>
+          <td>
+            23
+          </td>
+          <td>
+            Imports from the same module should be merged
+          </td>
+          <td>
+            &#39;/github/workspace/frontend/node_modules/react-router-dom/dist/index.js&#39; imported multiple times.
+          </td>
+          <td class="hidden">
+            69f09031-cc4f-4005-a624-1efc0d6406df
+          </td>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/project/issues?branch=main&id=frontend&issues=69f09031-cc4f-4005-a624-1efc0d6406df&open=69f09031-cc4f-4005-a624-1efc0d6406df">OPEN</a></td>
+        </tr>
+        
+        <tr>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/coding_rules#rule_key=typescript:S6606">
+              typescript:S6606
+            </a></td>
+          <td>
+            
+            MINOR
+            
+          </td>
+          <td class="component">
+            src/hooks/useBlogData.tsx
+          </td>
+          <td>
+            61
+          </td>
+          <td>
+            Nullish coalescing should be preferred
+          </td>
+          <td>
+            Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.
+          </td>
+          <td class="hidden">
+            6042f3a0-cf60-4ce0-a838-29d70d3a5a8f
+          </td>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/project/issues?branch=main&id=frontend&issues=6042f3a0-cf60-4ce0-a838-29d70d3a5a8f&open=6042f3a0-cf60-4ce0-a838-29d70d3a5a8f">OPEN</a></td>
+        </tr>
+        
+        <tr>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/coding_rules#rule_key=typescript:S6606">
+              typescript:S6606
+            </a></td>
+          <td>
+            
+            MINOR
+            
+          </td>
+          <td class="component">
+            src/hooks/useBlogData.tsx
+          </td>
+          <td>
+            43
+          </td>
+          <td>
+            Nullish coalescing should be preferred
+          </td>
+          <td>
+            Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.
+          </td>
+          <td class="hidden">
+            511fc0d3-6e5d-4e1f-922c-c12f8a7d571c
+          </td>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/project/issues?branch=main&id=frontend&issues=511fc0d3-6e5d-4e1f-922c-c12f8a7d571c&open=511fc0d3-6e5d-4e1f-922c-c12f8a7d571c">OPEN</a></td>
+        </tr>
+        
+        <tr>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/coding_rules#rule_key=typescript:S3863">
+              typescript:S3863
+            </a></td>
+          <td>
+            
+            MINOR
+            
+          </td>
+          <td class="component">
+            src/pages/CreateBlog.tsx
+          </td>
+          <td>
+            3
+          </td>
+          <td>
+            Imports from the same module should be merged
+          </td>
+          <td>
+            &#39;/github/workspace/frontend/node_modules/react-router-dom/dist/index.js&#39; imported multiple times.
+          </td>
+          <td class="hidden">
+            4f00411e-9fb4-4b9a-936f-ac3b3d22b13e
+          </td>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/project/issues?branch=main&id=frontend&issues=4f00411e-9fb4-4b9a-936f-ac3b3d22b13e&open=4f00411e-9fb4-4b9a-936f-ac3b3d22b13e">OPEN</a></td>
+        </tr>
+        
+        <tr>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/coding_rules#rule_key=typescript:S3863">
+              typescript:S3863
+            </a></td>
+          <td>
+            
+            MINOR
+            
+          </td>
+          <td class="component">
+            src/pages/SingleBlog.tsx
+          </td>
+          <td>
+            24
+          </td>
+          <td>
+            Imports from the same module should be merged
+          </td>
+          <td>
+            &#39;/github/workspace/frontend/node_modules/react-router-dom/dist/index.js&#39; imported multiple times.
+          </td>
+          <td class="hidden">
+            21946780-80b9-4afb-81d0-64092ebfde8f
+          </td>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/project/issues?branch=main&id=frontend&issues=21946780-80b9-4afb-81d0-64092ebfde8f&open=21946780-80b9-4afb-81d0-64092ebfde8f">OPEN</a></td>
+        </tr>
+        
+        <tr>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/coding_rules#rule_key=typescript:S6606">
+              typescript:S6606
+            </a></td>
+          <td>
+            
+            MINOR
+            
+          </td>
+          <td class="component">
+            src/pages/SingleBlog.tsx
+          </td>
+          <td>
+            80
+          </td>
+          <td>
+            Nullish coalescing should be preferred
+          </td>
+          <td>
+            Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.
+          </td>
+          <td class="hidden">
+            1ce1809d-e583-4607-8d20-30ca71995ba4
+          </td>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/project/issues?branch=main&id=frontend&issues=1ce1809d-e583-4607-8d20-30ca71995ba4&open=1ce1809d-e583-4607-8d20-30ca71995ba4">OPEN</a></td>
+        </tr>
+        
+        <tr>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/coding_rules#rule_key=typescript:S6551">
+              typescript:S6551
+            </a></td>
+          <td>
+            
+            MINOR
+            
+          </td>
+          <td class="component">
+            src/pages/SingleBlog.tsx
+          </td>
+          <td>
+            167
+          </td>
+          <td>
+            Objects and classes converted or coerced to strings should define a &#34;toString()&#34; method
+          </td>
+          <td>
+            &#39;marked(blog.content)&#39; may use Object&#39;s default stringification format (&#39;[object Object]&#39;) when stringified.
+          </td>
+          <td class="hidden">
+            17a84d91-08ff-4976-94c9-981fe53f34a2
+          </td>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/project/issues?branch=main&id=frontend&issues=17a84d91-08ff-4976-94c9-981fe53f34a2&open=17a84d91-08ff-4976-94c9-981fe53f34a2">OPEN</a></td>
+        </tr>
+        
+        <tr>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/coding_rules#rule_key=typescript:S6606">
+              typescript:S6606
+            </a></td>
+          <td>
+            
+            MINOR
+            
+          </td>
+          <td class="component">
+            src/hooks/useBlogData.tsx
+          </td>
+          <td>
+            78
+          </td>
+          <td>
+            Nullish coalescing should be preferred
+          </td>
+          <td>
+            Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.
+          </td>
+          <td class="hidden">
+            04bd6b17-99a9-4879-b7d3-52786dc7f90f
+          </td>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/project/issues?branch=main&id=frontend&issues=04bd6b17-99a9-4879-b7d3-52786dc7f90f&open=04bd6b17-99a9-4879-b7d3-52786dc7f90f">OPEN</a></td>
+        </tr>
+        
+      </tbody>
+    </table>
+
+    
+
+    
+  </div>
+
+  
+
+  <script>
+    var canvas = document.getElementById("vulnerabilitiesPieChart");
+    var ctx = canvas.getContext("2d");
+
+    var data = [
+      0,
+      0,
+      0
+    ];
+    var total = data.reduce(function(sum, n) {
+      return sum + n;
+    })
+    var colors = ['#d43223', '#f39c12', '#319ddb'];
+
+    for (var i = 0, lastend = 0; i < data.length; i++) {
+      ctx.fillStyle = colors[i];
+      ctx.beginPath();
+      ctx.moveTo(canvas.width / 2, canvas.height / 2);
+      ctx.arc(canvas.width / 2, canvas.height / 2, canvas.height / 2, lastend, lastend + (Math.PI * 2 * (data[i] /
+        total)), false);
+      ctx.lineTo(canvas.width / 2, canvas.height / 2);
+      ctx.fill();
+      lastend += Math.PI * 2 * (data[i] / total);
+    }
+  </script>
+
+  
+</body>
+
+</html>
