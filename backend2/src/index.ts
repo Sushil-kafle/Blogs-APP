@@ -32,8 +32,9 @@ app.use(errorHandler);
 const PORT = process.env.PORT || 5000;
 
 app.get("/api/blogs/health", (req, res) => {
-    res.status(200).send(`OK from port ${process.env.NODE_ENV}`)
-  })
+  res.status(200).send(`OK from port ${process.env.NODE_ENV}`)
+})
 
 
 app.listen(PORT, () => console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`));
+// 
