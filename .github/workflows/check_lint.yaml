@@ -44,7 +44,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "lts/*"
+          node-version: 18
           cache: "yarn"
           cache-dependency-path: backend1/yarn.lock
 
@@ -71,21 +71,13 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
-      - name: Setup Node.js 18 for sonar-report
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-
-      - name: Install sonar-report tool
-        run: yarn global add sonar-report
-
       - name: Generate HTML report for backend1
         run: |
           mkdir -p sonar-report
-          npx sonar-report --projectKey backend1 \
-                          --token ${{ secrets.SONAR_TOKEN }} \
-                          --url ${{ secrets.SONAR_HOST_URL }} \
-                          --output sonar-report/backend-1-report.html
+          npx sonar-report --project backend1 \
+                           --token ${{ secrets.SONAR_TOKEN }} \
+                           --url ${{ secrets.SONAR_HOST_URL }} \
+                           --output sonar-report/backend-1-report.html
 
       - name: Upload HTML report for backend1
         uses: actions/upload-artifact@v4
@@ -104,7 +96,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "lts/*"
+          node-version: 18
           cache: "yarn"
           cache-dependency-path: backend2/yarn.lock
 
@@ -131,21 +123,13 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
-      - name: Setup Node.js 18 for sonar-report
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-
-      - name: Install sonar-report tool
-        run: yarn global add sonar-report
-
       - name: Generate HTML report for backend2
         run: |
           mkdir -p sonar-report
-          npx sonar-report --projectKey backend2 \
-                          --token ${{ secrets.SONAR_TOKEN }} \
-                          --url ${{ secrets.SONAR_HOST_URL }} \
-                          --output sonar-report/backend-2-report.html
+          npx sonar-report --project backend2 \
+                           --token ${{ secrets.SONAR_TOKEN }} \
+                           --url ${{ secrets.SONAR_HOST_URL }} \
+                           --output sonar-report/backend-2-report.html
 
       - name: Upload HTML report for backend2
         uses: actions/upload-artifact@v4
@@ -164,7 +148,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "lts/*"
+          node-version: 18
           cache: "yarn"
           cache-dependency-path: frontend/yarn.lock
 
@@ -191,21 +175,13 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
-      - name: Setup Node.js 18 for sonar-report
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-
-      - name: Install sonar-report tool
-        run: yarn global add sonar-report
-
       - name: Generate HTML report for frontend
         run: |
           mkdir -p sonar-report
-          npx sonar-report --projectKey frontend \
-            --token ${{ secrets.SONAR_TOKEN }} \
-            --url ${{ secrets.SONAR_HOST_URL }} \
-            --output sonar-report/frontend-report.html
+          npx sonar-report --project frontend \
+                           --token ${{ secrets.SONAR_TOKEN }} \
+                           --url ${{ secrets.SONAR_HOST_URL }} \
+                           --output sonar-report/frontend-report.html
 
       - name: Upload HTML report for frontend
         uses: actions/upload-artifact@v4
