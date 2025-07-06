@@ -41,14 +41,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup nodejs
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "lts/*"
           cache: "yarn"
           cache-dependency-path: backend1/yarn.lock
 
-      - name: Install dependency
+      - name: Install dependencies
         working-directory: backend1
         run: yarn install --frozen-lockfile
 
@@ -64,19 +64,29 @@ jobs:
             -Dsonar.projectKey=backend1
             -Dsonar.projectName=Backend1
             -Dsonar.sources=src
-            -Dsonar.exclusions=**/node_modules/**,**/coverage/**,**/*.test.js,**/*.spec.js
+            -Dsonar.exclusions=**/node_modules/**
             -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
             -Dsonar.qualitygate.wait=true
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
-      - name: SonarQube Quality Gate check
-        uses: sonarsource/sonarqube-quality-gate-action@v1
-        timeout-minutes: 5
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+      - name: Install sonar-report tool
+        run: yarn global add sonar-report
+
+      - name: Generate HTML report for backend1
+        run: |
+          mkdir -p sonar-report
+          sonar-report -k backend1 \
+                       -t ${{ secrets.SONAR_TOKEN }} \
+                       -u ${{ secrets.SONAR_HOST_URL }} \
+                       -o sonar-report/backend-1-report.html
+
+      - name: Upload HTML report for backend1
+        uses: actions/upload-artifact@v4
+        with:
+          name: sonar-report-backend1
+          path: sonar-report/backend-1-report.html
 
   lint-and-scan-backend2:
     needs: detect-changes
@@ -86,14 +96,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup nodejs
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "lts/*"
           cache: "yarn"
           cache-dependency-path: backend2/yarn.lock
 
-      - name: Install dependency
+      - name: Install dependencies
         working-directory: backend2
         run: yarn install --frozen-lockfile
 
@@ -109,19 +119,29 @@ jobs:
             -Dsonar.projectKey=backend2
             -Dsonar.projectName=Backend2
             -Dsonar.sources=src
-            -Dsonar.exclusions=**/node_modules/**,**/coverage/**,**/*.test.js,**/*.spec.js
+            -Dsonar.exclusions=**/node_modules/**
             -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
             -Dsonar.qualitygate.wait=true
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
-      - name: SonarQube Quality Gate check
-        uses: sonarsource/sonarqube-quality-gate-action@v1
-        timeout-minutes: 5
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+      - name: Install sonar-report tool
+        run: yarn global add sonar-report
+
+      - name: Generate HTML report for backend2
+        run: |
+          mkdir -p sonar-report
+          sonar-report -k backend2 \
+                       -t ${{ secrets.SONAR_TOKEN }} \
+                       -u ${{ secrets.SONAR_HOST_URL }} \
+                       -o sonar-report/backend-2-report.html
+
+      - name: Upload HTML report for backend2
+        uses: actions/upload-artifact@v4
+        with:
+          name: sonar-report-backend2
+          path: sonar-report/backend-2-report.html
 
   lint-and-scan-frontend:
     needs: detect-changes
@@ -131,14 +151,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup nodejs
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "lts/*"
           cache: "yarn"
           cache-dependency-path: frontend/yarn.lock
 
-      - name: Install dependency
+      - name: Install dependencies
         working-directory: frontend
         run: yarn install --frozen-lockfile
 
@@ -154,16 +174,26 @@ jobs:
             -Dsonar.projectKey=frontend
             -Dsonar.projectName=Frontend
             -Dsonar.sources=src
-            -Dsonar.exclusions=**/node_modules/**,**/coverage/**,**/*.test.js,**/*.spec.js,**/build/**,**/dist/**
+            -Dsonar.exclusions=**/node_modules/**
             -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
             -Dsonar.qualitygate.wait=true
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
-      - name: SonarQube Quality Gate check
-        uses: sonarsource/sonarqube-quality-gate-action@v1
-        timeout-minutes: 5
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+      - name: Install sonar-report tool
+        run: yarn global add sonar-report
+
+      - name: Generate HTML report for frontend
+        run: |
+          mkdir -p sonar-report
+          sonar-report -k frontend \
+                       -t ${{ secrets.SONAR_TOKEN }} \
+                       -u ${{ secrets.SONAR_HOST_URL }} \
+                       -o sonar-report/frontend-report.html
+
+      - name: Upload HTML report for frontend
+        uses: actions/upload-artifact@v4
+        with:
+          name: sonar-report-frontend
+          path: sonar-report/frontend-report.html
