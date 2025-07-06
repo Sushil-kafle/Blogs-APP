@@ -63,6 +63,44 @@ jobs:
             docker.io/${{ secrets.DOCKER_USERNAME }}/backend1:dev-${{ github.run_number }}
             docker.io/${{ secrets.DOCKER_USERNAME }}/backend1:dev-latest
 
+      - name: Run Trivy vulnerability scanner on Backend1
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: "docker.io/${{ secrets.DOCKER_USERNAME }}/backend1:dev-${{ github.run_number }}"
+          format: "sarif"
+          output: "trivy-backend1-results.sarif"
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: "trivy-backend1-results.sarif"
+
+      - name: Run Trivy vulnerability scanner (HTML report)
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: "docker.io/${{ secrets.DOCKER_USERNAME }}/backend1:dev-${{ github.run_number }}"
+          format: "template"
+          template: "@/contrib/html.tpl"
+          output: "backend1-trivy-report.html"
+
+      - name: Upload Trivy HTML report as artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: trivy-report-backend1
+          path: backend1-trivy-report.html
+
+      - name: Run Trivy vulnerability scanner (table format)
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: "docker.io/${{ secrets.DOCKER_USERNAME }}/backend1:dev-${{ github.run_number }}"
+          format: "table"
+          exit-code: "1"
+          ignore-unfixed: true
+          vuln-type: "os,library"
+          severity: "CRITICAL,HIGH"
+
   build-and-push-backend2:
     needs: detect-changes
     if: needs.detect-changes.outputs.backend2 == 'true'
@@ -84,7 +122,45 @@ jobs:
           push: true
           tags: |
             docker.io/${{ secrets.DOCKER_USERNAME }}/backend2:dev-${{ github.run_number }}
-            docker.io/${{ secrets.DOCKER_USERNAME }}/backend2:dev-latest
+            docker.io/${{ secrets.DOCKER_USERNAME }}/backend2:dev-latest'
+
+      - name: Run Trivy vulnerability scanner on Backend2
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: "docker.io/${{ secrets.DOCKER_USERNAME }}/backend2:dev-${{ github.run_number }}"
+          format: "sarif"
+          output: "trivy-backend2-results.sarif"
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: "trivy-backend2-results.sarif"
+
+      - name: Run Trivy vulnerability scanner (HTML report)
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: "docker.io/${{ secrets.DOCKER_USERNAME }}/backend2:dev-${{ github.run_number }}"
+          format: "template"
+          template: "@/contrib/html.tpl"
+          output: "backend2-trivy-report.html"
+
+      - name: Upload Trivy HTML report as artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: trivy-report-backend2
+          path: backend2-trivy-report.html
+
+      - name: Run Trivy vulnerability scanner (table format)
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: "docker.io/${{ secrets.DOCKER_USERNAME }}/backend2:dev-${{ github.run_number }}"
+          format: "table"
+          exit-code: "1"
+          ignore-unfixed: true
+          vuln-type: "os,library"
+          severity: "CRITICAL,HIGH"
 
   build-and-push-frontend:
     needs: detect-changes
@@ -107,4 +183,99 @@ jobs:
           push: true
           tags: |
             docker.io/${{ secrets.DOCKER_USERNAME }}/frontend:dev-${{ github.run_number }}
-            docker.io/${{ secrets.DOCKER_USERNAME }}/frontend:dev-latest
+            docker.io/${{ secrets.DOCKER_USERNAME }}/frontend:dev-latest'
+
+      - name: Run Trivy vulnerability scanner on Frontend
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: "docker.io/${{ secrets.DOCKER_USERNAME }}/frontend:dev-${{ github.run_number }}"
+          format: "sarif"
+          output: "trivy-frontend-results.sarif"
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: "trivy-frontend-results.sarif"
+
+      - name: Run Trivy vulnerability scanner (HTML report)
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: "docker.io/${{ secrets.DOCKER_USERNAME }}/frontend:dev-${{ github.run_number }}"
+          format: "template"
+          template: "@/contrib/html.tpl"
+          output: "frontend-trivy-report.html"
+
+      - name: Upload Trivy HTML report as artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: trivy-report-frontend
+          path: frontend-trivy-report.html
+
+      - name: Run Trivy vulnerability scanner (table format)
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: "docker.io/${{ secrets.DOCKER_USERNAME }}/frontend:dev-${{ github.run_number }}"
+          format: "table"
+          exit-code: "1"
+          ignore-unfixed: true
+          vuln-type: "os,library"
+          severity: "CRITICAL,HIGH"
+
+  upload-trivy-reports:
+    needs:
+      - build-and-push-backend1
+      - build-and-push-backend2
+      - build-and-push-frontend
+      - detect-changes
+    if: always()
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Prepare reports folder
+        run: mkdir -p gh-pages/trivy-report
+
+      - name: Copy backend1 report
+        if: needs.detect-changes.outputs.backend1 == 'true'
+        run: |
+          mkdir -p gh-pages/trivy-report/backend1
+          cp artifacts/trivy-report-backend1/backend1-trivy-report.html gh-pages/trivy-report/backend1/index.html
+
+      - name: Copy backend2 report
+        if: needs.detect-changes.outputs.backend2 == 'true'
+        run: |
+          mkdir -p gh-pages/trivy-report/backend2
+          cp artifacts/trivy-report-backend2/backend2-trivy-report.html gh-pages/trivy-report/backend2/index.html
+
+      - name: Copy frontend report
+        if: needs.detect-changes.outputs.frontend == 'true'
+        run: |
+          mkdir -p gh-pages/trivy-report/frontend
+          cp artifacts/trivy-report-frontend/frontend-trivy-report.html gh-pages/trivy-report/frontend/index.html
+
+      - name: Publish to report branch
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin reports || true
+          git switch reports || git switch --orphan reports
+
+          cp -r gh-pages/* .
+          git add trivy-report
+          git commit -m "chore(report): update changed trivy reports on ${{ github.sha }}" || echo "No changes to commit"
+          git push origin reports
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
