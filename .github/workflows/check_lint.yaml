@@ -88,7 +88,7 @@ jobs:
             --project="backend1" \
             --application="backend1" \
             --release="1.0.0" \
-            --branch="${{ github.head_ref || github.ref_name }}" \
+            --branch="main" \
             --output="sonar-report/backend1-report.html"
 
       - name: Upload HTML report for backend1
@@ -152,7 +152,7 @@ jobs:
             --project="backend2" \
             --application="backend2" \
             --release="1.0.0" \
-            --branch="${{ github.head_ref || github.ref_name }}" \
+            --branch="main" \
             --output="sonar-report/backend2-report.html"
 
       - name: Upload HTML report for backend2
@@ -216,7 +216,7 @@ jobs:
             --project="frontend" \
             --application="frontend" \
             --release="1.0.0" \
-            --branch="${{ github.head_ref || github.ref_name }}" \
+            --branch="main \
             --output="sonar-report/frontend-report.html"
 
       - name: Upload HTML report for frontend
