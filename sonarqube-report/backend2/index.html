@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>SonarQube Vulnerability Report</title>
+  <style>
+    /*
+	The sss stylesheet is released under the MIT license.
+	<https://github.com/Thiht/sss>
+	*/
+    pre,
+td,
+th {
+    padding: 5px 10px
+}
+
+code,
+hr,
+pre,
+thead {
+    background: #EEE
+}
+
+body {
+    color: #333;
+    font-family: 'Segoe UI', 'Lucida Grande', Helvetica, sans-serif;
+    line-height: 1.5;
+}
+
+div.summup {
+    max-width: 800px;
+    margin: 50px auto;
+}
+
+div.detail {
+    padding: 20px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 400;
+    line-height: 1em;
+    margin: 20px 0
+}
+
+h1 {
+    font-size: 2.25em
+}
+
+h2 {
+    font-size: 1.75em
+}
+
+h3 {
+    font-size: 1.5em
+}
+
+h4,
+h5,
+h6 {
+    font-size: 1.25em
+}
+
+a {
+    color: #08C;
+    text-decoration: none
+}
+
+a:focus,
+a:hover {
+    text-decoration: underline
+}
+
+a:visited {
+    color: #058
+}
+
+img {
+    max-width: 100%
+}
+
+li+li {
+    margin-top: 3px
+}
+
+dt {
+    font-weight: 700
+}
+
+code {
+    font-family: Consolas, "Lucida Console", monospace;
+    padding: 1px 5px
+}
+
+pre {
+    white-space: pre-wrap
+}
+
+pre code {
+    padding: 0
+}
+
+blockquote {
+    border-left: 5px solid #EEE;
+    margin: 0;
+    padding: 0 10px
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%
+}
+
+table+table {
+    margin-top: 1em
+}
+
+thead {
+    text-align: left
+}
+
+td,
+th {
+    border: 1px solid #EEE
+}
+
+td.component {
+    word-break: break-all;
+}
+
+hr {
+    border: 0;
+    height: 1px
+}
+
+.banner {
+    text-align: center;
+}
+
+canvas {
+    display: block;
+    margin: 10px auto;
+}
+
+.statusOK {
+    background-color: #0a0
+}
+
+.statusERROR {
+    background-color: #d4333f
+}
+
+.sevHIGH {
+    background-color: #d43223
+}
+
+.sevMEDIUM {
+    background-color: #f39c12
+}
+
+.sevLOW {
+    background-color: #319ddb
+}
+
+.hidden {
+    display: none;
+}
+
+.rulestable {
+    table-layout: fixed;
+    word-wrap: break-word
+}
+  </style>
+</head>
+
+<body>
+  <div class="summup">
+    <!-- insert your company banner here -->
+    <!--
+		<p class="banner">
+			<a href="https://www.soprasteria.com/" target="_blank">
+				<img src="https://upload.wikimedia.org/wikipedia/en/thumb/0/02/Sopra_Steria_logo.svg/1280px-Sopra_Steria_logo.svg.png" alt="Sopra Steria" height="50">
+			</a>
+		</p>
+		-->
+
+    <h1>SonarQube Vulnerability Report</h1>
+
+    <dl>
+      <dt>Report Generated On</dt>
+      <dd>
+        Sunday, Jul 6, 2025
+      </dd>
+
+      <dt>Project Name/URL</dt>
+      <dd>
+        <a href="https://dc19-160-250-255-101.ngrok-free.app/dashboard?id=backend2" target="_blank">
+          backend2
+        </a>
+      </dd>
+
+      <dt>Application</dt>
+      <dd>
+        backend2
+      </dd>
+
+      <dt>Release</dt>
+      <dd>
+        1.0.0
+      </dd>
+
+      <dt>Branch</dt>
+      <dd>
+        main
+      </dd>
+
+      <dt>Delta Analysis</dt>
+      <dd>
+        No
+      </dd>
+
+      
+
+      <dt>Coverage</dt>
+      <dd>
+        0.0
+      </dd>
+
+      
+
+      
+    </dl>
+
+    
+    <h2>Quality Gate Status: OK since N/A
+    </h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Metric</th>
+          <th>Value - Threshold</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        
+
+      </tbody>
+    </table>
+    
+
+    <h2>Summary of the Detected Vulnerabilities
+    </h2>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Severity</th>
+          <th>Number of Issues</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="sevHIGH"></td>
+          <td>HIGH</td>
+          <td>
+            0
+          </td>
+        </tr>
+        <tr>
+          <td class="sevMEDIUM"></td>
+          <td>MEDIUM</td>
+          <td>
+            0
+          </td>
+        </tr>
+        <tr>
+          <td class="sevLOW"></td>
+          <td>LOW</td>
+          <td>
+            1
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    
+    <canvas id="vulnerabilitiesPieChart" width="200" height="200"></canvas>
+    
+  </div>
+
+  <div class=detail>
+    
+    <h2>Detail of the Detected Vulnerabilities
+    </h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Rule</th>
+          <th>Severity</th>
+          <th>Component</th>
+          <th>Line</th>
+          <th>Description</th>
+          <th>Message</th>
+          <th class="hidden">Key</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        <tr>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/coding_rules#rule_key=typescript:S2486">
+              typescript:S2486
+            </a></td>
+          <td>
+            
+            MINOR
+            
+          </td>
+          <td class="component">
+            src/controllers/commentController.ts
+          </td>
+          <td>
+            38
+          </td>
+          <td>
+            Exceptions should not be ignored
+          </td>
+          <td>
+            Handle this exception or don&#39;t catch it at all.
+          </td>
+          <td class="hidden">
+            f5966141-fbed-4ccc-9348-27664379161a
+          </td>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/project/issues?branch=main&id=backend2&issues=f5966141-fbed-4ccc-9348-27664379161a&open=f5966141-fbed-4ccc-9348-27664379161a">OPEN</a></td>
+        </tr>
+        
+        <tr>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/coding_rules#rule_key=typescript:S1533">
+              typescript:S1533
+            </a></td>
+          <td>
+            
+            MINOR
+            
+          </td>
+          <td class="component">
+            src/middlewares/errorHandler.ts
+          </td>
+          <td>
+            30
+          </td>
+          <td>
+            Wrapper objects should not be used for primitive types
+          </td>
+          <td>
+            Replace this &#34;Number&#34; wrapper object with primitive type &#34;number&#34;.
+          </td>
+          <td class="hidden">
+            da92ea28-873a-4553-a4c0-995dc2f53cb3
+          </td>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/project/issues?branch=main&id=backend2&issues=da92ea28-873a-4553-a4c0-995dc2f53cb3&open=da92ea28-873a-4553-a4c0-995dc2f53cb3">OPEN</a></td>
+        </tr>
+        
+        <tr>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/coding_rules#rule_key=typescript:S6606">
+              typescript:S6606
+            </a></td>
+          <td>
+            
+            MINOR
+            
+          </td>
+          <td class="component">
+            src/db/knex.ts
+          </td>
+          <td>
+            8
+          </td>
+          <td>
+            Nullish coalescing should be preferred
+          </td>
+          <td>
+            Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.
+          </td>
+          <td class="hidden">
+            c519501f-6b47-4db3-8ae3-24443ad67ff3
+          </td>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/project/issues?branch=main&id=backend2&issues=c519501f-6b47-4db3-8ae3-24443ad67ff3&open=c519501f-6b47-4db3-8ae3-24443ad67ff3">OPEN</a></td>
+        </tr>
+        
+        <tr>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/coding_rules#rule_key=typescript:S6606">
+              typescript:S6606
+            </a></td>
+          <td>
+            
+            MINOR
+            
+          </td>
+          <td class="component">
+            src/index.ts
+          </td>
+          <td>
+            32
+          </td>
+          <td>
+            Nullish coalescing should be preferred
+          </td>
+          <td>
+            Prefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.
+          </td>
+          <td class="hidden">
+            b78e2f81-9346-4b97-9139-1101711a6ae9
+          </td>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/project/issues?branch=main&id=backend2&issues=b78e2f81-9346-4b97-9139-1101711a6ae9&open=b78e2f81-9346-4b97-9139-1101711a6ae9">OPEN</a></td>
+        </tr>
+        
+        <tr>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/coding_rules#rule_key=typescript:S2486">
+              typescript:S2486
+            </a></td>
+          <td>
+            
+            MINOR
+            
+          </td>
+          <td class="component">
+            src/controllers/blogController.ts
+          </td>
+          <td>
+            22
+          </td>
+          <td>
+            Exceptions should not be ignored
+          </td>
+          <td>
+            Handle this exception or don&#39;t catch it at all.
+          </td>
+          <td class="hidden">
+            b060ff7f-cda5-4191-b3c9-e9ff98b7de06
+          </td>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/project/issues?branch=main&id=backend2&issues=b060ff7f-cda5-4191-b3c9-e9ff98b7de06&open=b060ff7f-cda5-4191-b3c9-e9ff98b7de06">OPEN</a></td>
+        </tr>
+        
+        <tr>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/coding_rules#rule_key=typescript:S1444">
+              typescript:S1444
+            </a></td>
+          <td>
+            
+            MINOR
+            
+          </td>
+          <td class="component">
+            src/models/BlogModel.ts
+          </td>
+          <td>
+            4
+          </td>
+          <td>
+            Public &#34;static&#34; fields should be read-only
+          </td>
+          <td>
+            Make this public static property readonly.
+          </td>
+          <td class="hidden">
+            a1f18989-850b-4765-8a48-5aeea80f4902
+          </td>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/project/issues?branch=main&id=backend2&issues=a1f18989-850b-4765-8a48-5aeea80f4902&open=a1f18989-850b-4765-8a48-5aeea80f4902">OPEN</a></td>
+        </tr>
+        
+        <tr>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/coding_rules#rule_key=typescript:S2486">
+              typescript:S2486
+            </a></td>
+          <td>
+            
+            MINOR
+            
+          </td>
+          <td class="component">
+            src/controllers/blogController.ts
+          </td>
+          <td>
+            47
+          </td>
+          <td>
+            Exceptions should not be ignored
+          </td>
+          <td>
+            Handle this exception or don&#39;t catch it at all.
+          </td>
+          <td class="hidden">
+            9a6c0120-d492-449e-b056-a6281f3e1d60
+          </td>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/project/issues?branch=main&id=backend2&issues=9a6c0120-d492-449e-b056-a6281f3e1d60&open=9a6c0120-d492-449e-b056-a6281f3e1d60">OPEN</a></td>
+        </tr>
+        
+        <tr>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/coding_rules#rule_key=typescript:S2486">
+              typescript:S2486
+            </a></td>
+          <td>
+            
+            MINOR
+            
+          </td>
+          <td class="component">
+            src/controllers/blogController.ts
+          </td>
+          <td>
+            32
+          </td>
+          <td>
+            Exceptions should not be ignored
+          </td>
+          <td>
+            Handle this exception or don&#39;t catch it at all.
+          </td>
+          <td class="hidden">
+            797c4ac8-7361-41a7-9401-61eefff2708c
+          </td>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/project/issues?branch=main&id=backend2&issues=797c4ac8-7361-41a7-9401-61eefff2708c&open=797c4ac8-7361-41a7-9401-61eefff2708c">OPEN</a></td>
+        </tr>
+        
+        <tr>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/coding_rules#rule_key=typescript:S2486">
+              typescript:S2486
+            </a></td>
+          <td>
+            
+            MINOR
+            
+          </td>
+          <td class="component">
+            src/controllers/commentController.ts
+          </td>
+          <td>
+            26
+          </td>
+          <td>
+            Exceptions should not be ignored
+          </td>
+          <td>
+            Handle this exception or don&#39;t catch it at all.
+          </td>
+          <td class="hidden">
+            79054784-e8ad-40cc-b3f3-11b0dafa8ea6
+          </td>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/project/issues?branch=main&id=backend2&issues=79054784-e8ad-40cc-b3f3-11b0dafa8ea6&open=79054784-e8ad-40cc-b3f3-11b0dafa8ea6">OPEN</a></td>
+        </tr>
+        
+        <tr>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/coding_rules#rule_key=typescript:S1444">
+              typescript:S1444
+            </a></td>
+          <td>
+            
+            MINOR
+            
+          </td>
+          <td class="component">
+            src/models/CommentModel.ts
+          </td>
+          <td>
+            4
+          </td>
+          <td>
+            Public &#34;static&#34; fields should be read-only
+          </td>
+          <td>
+            Make this public static property readonly.
+          </td>
+          <td class="hidden">
+            5286e4e3-cd5f-4640-a095-43bf5d3856e3
+          </td>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/project/issues?branch=main&id=backend2&issues=5286e4e3-cd5f-4640-a095-43bf5d3856e3&open=5286e4e3-cd5f-4640-a095-43bf5d3856e3">OPEN</a></td>
+        </tr>
+        
+        <tr>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/coding_rules#rule_key=typescript:S1874">
+              typescript:S1874
+            </a></td>
+          <td>
+            
+            MINOR
+            
+          </td>
+          <td class="component">
+            src/middlewares/logger_middleware.ts
+          </td>
+          <td>
+            10
+          </td>
+          <td>
+            Deprecated APIs should not be used
+          </td>
+          <td>
+            &#39;connection&#39; is deprecated.
+          </td>
+          <td class="hidden">
+            3aed05e6-8b75-4a72-9394-8e0302824bcd
+          </td>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/project/issues?branch=main&id=backend2&issues=3aed05e6-8b75-4a72-9394-8e0302824bcd&open=3aed05e6-8b75-4a72-9394-8e0302824bcd">OPEN</a></td>
+        </tr>
+        
+        <tr>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/coding_rules#rule_key=typescript:S1874">
+              typescript:S1874
+            </a></td>
+          <td>
+            
+            MINOR
+            
+          </td>
+          <td class="component">
+            src/middlewares/errorHandler.ts
+          </td>
+          <td>
+            38
+          </td>
+          <td>
+            Deprecated APIs should not be used
+          </td>
+          <td>
+            &#39;connection&#39; is deprecated.
+          </td>
+          <td class="hidden">
+            086e27be-851c-43c3-a8aa-dcba3b8335c0
+          </td>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/project/issues?branch=main&id=backend2&issues=086e27be-851c-43c3-a8aa-dcba3b8335c0&open=086e27be-851c-43c3-a8aa-dcba3b8335c0">OPEN</a></td>
+        </tr>
+        
+        <tr>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/coding_rules#rule_key=typescript:S5689">
+              typescript:S5689
+            </a></td>
+          <td>
+            
+            LOW
+            
+          </td>
+          <td class="component">
+            src/index.ts
+          </td>
+          <td>
+            14
+          </td>
+          <td>
+            Disclosing fingerprints from web application technologies is security-sensitive
+          </td>
+          <td>
+            This framework implicitly discloses version information by default. Make sure it is safe here.
+          </td>
+          <td class="hidden">
+            bef4cffd-d544-4748-8c6a-7153f5648275
+          </td>
+          <td><a href="https://dc19-160-250-255-101.ngrok-free.app/security_hotspots?branch=main&id=backend2&hotspots=bef4cffd-d544-4748-8c6a-7153f5648275">TO_REVIEW</a></td>
+        </tr>
+        
+      </tbody>
+    </table>
+
+    
+
+    
+  </div>
+
+  
+
+  <script>
+    var canvas = document.getElementById("vulnerabilitiesPieChart");
+    var ctx = canvas.getContext("2d");
+
+    var data = [
+      0,
+      0,
+      1
+    ];
+    var total = data.reduce(function(sum, n) {
+      return sum + n;
+    })
+    var colors = ['#d43223', '#f39c12', '#319ddb'];
+
+    for (var i = 0, lastend = 0; i < data.length; i++) {
+      ctx.fillStyle = colors[i];
+      ctx.beginPath();
+      ctx.moveTo(canvas.width / 2, canvas.height / 2);
+      ctx.arc(canvas.width / 2, canvas.height / 2, canvas.height / 2, lastend, lastend + (Math.PI * 2 * (data[i] /
+        total)), false);
+      ctx.lineTo(canvas.width / 2, canvas.height / 2);
+      ctx.fill();
+      lastend += Math.PI * 2 * (data[i] / total);
+    }
+  </script>
+
+  
+</body>
+
+</html>
