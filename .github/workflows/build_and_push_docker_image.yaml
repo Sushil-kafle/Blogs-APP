@@ -20,6 +20,7 @@ jobs:
       - uses: dorny/paths-filter@v3
         id: filter
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           filters: |
             backend1:
               - 'backend1/**'
@@ -28,8 +29,15 @@ jobs:
             frontend:
               - 'frontend/**'
 
+      - name: Debug - Show detected changes
+        run: |
+          echo "Backend1 changed: ${{ steps.filter.outputs.backend1 }}"
+          echo "Backend2 changed: ${{ steps.filter.outputs.backend2 }}"
+          echo "Frontend changed: ${{ steps.filter.outputs.frontend }}"
+
   build-and-push:
     needs: detect-changes
+    if: needs.detect-changes.outputs.backend1 == 'true' || needs.detect-changes.outputs.backend2 == 'true' || needs.detect-changes.outputs.frontend == 'true'
     runs-on: ubuntu-latest
     env:
       REGISTRY: docker.io
@@ -48,6 +56,12 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Debug - Show what will be built
+        run: |
+          echo "Will build Backend1: ${{ needs.detect-changes.outputs.backend1 == 'true' }}"
+          echo "Will build Backend2: ${{ needs.detect-changes.outputs.backend2 == 'true' }}"
+          echo "Will build Frontend: ${{ needs.detect-changes.outputs.frontend == 'true' }}"
 
       - name: Build and Push Backend1 Image
         if: needs.detect-changes.outputs.backend1 == 'true'
