@@ -70,12 +70,16 @@ jobs:
           format: "sarif"
           output: "trivy-backend1-results.sarif"
 
+      - name: Download Trivy HTML template
+        run: |
+          curl -L https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl -o html.tpl
+
       - name: Run Trivy vulnerability scanner (HTML report)
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: "docker.io/${{ secrets.DOCKER_USERNAME }}/backend1:dev-${{ github.run_number }}"
           format: "template"
-          template: "@/contrib/html.tpl"
+          template: "./html.tpl"
           output: "backend1-trivy-report.html"
 
       - name: Upload Trivy HTML report as artifact
@@ -125,12 +129,16 @@ jobs:
           format: "sarif"
           output: "trivy-backend2-results.sarif"
 
+      - name: Download Trivy HTML template
+        run: |
+          curl -L https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl -o html.tpl
+
       - name: Run Trivy vulnerability scanner (HTML report)
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: "docker.io/${{ secrets.DOCKER_USERNAME }}/backend2:dev-${{ github.run_number }}"
           format: "template"
-          template: "@/contrib/html.tpl"
+          template: "./html.tpl"
           output: "backend2-trivy-report.html"
 
       - name: Upload Trivy HTML report as artifact
@@ -180,12 +188,16 @@ jobs:
           format: "sarif"
           output: "trivy-frontend-results.sarif"
 
+      - name: Download Trivy HTML template
+        run: |
+          curl -L https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl -o html.tpl
+
       - name: Run Trivy vulnerability scanner (HTML report)
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: "docker.io/${{ secrets.DOCKER_USERNAME }}/frontend:dev-${{ github.run_number }}"
           format: "template"
-          template: "@/contrib/html.tpl"
+          template: "./html.tpl"
           output: "frontend-trivy-report.html"
 
       - name: Upload Trivy HTML report as artifact
