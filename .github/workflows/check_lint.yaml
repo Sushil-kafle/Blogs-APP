@@ -89,7 +89,12 @@ jobs:
             --application="backend1" \
             --release="1.0.0" \
             --branch="main" \
-            --output="sonar-report/backend1-report.html"
+            --output="sonar-report/backend1-report.html" \
+            --allbugs \
+            --coverage \
+            --quality-gate-status \
+            --no-rules-in-report \
+            --link-issues
 
       - name: Upload HTML report for backend1
         uses: actions/upload-artifact@v4
@@ -153,7 +158,12 @@ jobs:
             --application="backend2" \
             --release="1.0.0" \
             --branch="main" \
-            --output="sonar-report/backend2-report.html"
+            --output="sonar-report/backend2-report.html" \
+            --allbugs \
+            --coverage \
+            --quality-gate-status \
+            --no-rules-in-report \
+            --link-issues
 
       - name: Upload HTML report for backend2
         uses: actions/upload-artifact@v4
@@ -210,17 +220,74 @@ jobs:
         run: |
           mkdir -p sonar-report
           sonar-report \
-            --sonarurl="${{ secrets.SONAR_HOST_URL }}" \
-            --sonartoken="${{ secrets.SONAR_TOKEN }}" \
-            --sonarcomponent="frontend" \
-            --project="frontend" \
-            --application="frontend" \
-            --release="1.0.0" \
-            --branch="main" \
-            --output="sonar-report/frontend-report.html"
+              --sonarurl="${{ secrets.SONAR_HOST_URL }}" \
+              --sonartoken="${{ secrets.SONAR_TOKEN }}" \
+              --sonarcomponent="frontend" \
+              --project="frontend" \
+              --application="frontend" \
+              --release="1.0.0" \
+              --branch="main" \
+              --output="sonar-report/frontend-report.html" \
+              --allbugs \
+              --coverage \
+              --quality-gate-status \
+              --no-rules-in-report \
+              --link-issues
 
       - name: Upload HTML report for frontend
         uses: actions/upload-artifact@v4
         with:
           name: sonar-report-frontend
           path: sonar-report/frontend-report.html
+
+  upload-sonar-reports:
+    needs:
+      - lint-and-scan-backend1
+      - lint-and-scan-backend2
+      - lint-and-scan-frontend
+      - detect-changes
+    if: always()
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Prepare reports folder
+        run: mkdir -p gh-pages/sonarqube-report
+
+      - name: Copy backend1 report
+        if: needs.detect-changes.outputs.backend1 == 'true'
+        run: |
+          mkdir -p gh-pages/sonarqube-report/backend1
+          cp artifacts/sonar-report-backend1/backend1-report.html gh-pages/sonarqube-report/backend1/index.html
+
+      - name: Copy backend2 report
+        if: needs.detect-changes.outputs.backend2 == 'true'
+        run: |
+          mkdir -p gh-pages/sonarqube-report/backend2
+          cp artifacts/sonar-report-backend2/backend2-report.html gh-pages/sonarqube-report/backend2/index.html
+
+      - name: Copy frontend report
+        if: needs.detect-changes.outputs.frontend == 'true'
+        run: |
+          mkdir -p gh-pages/sonarqube-report/frontend
+          cp artifacts/sonar-report-frontend/frontend-report.html gh-pages/sonarqube-report/frontend/index.html
+
+      - name: Publish to report branch
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git fetch origin reports || true
+          git switch reports
+
+          cp -r gh-pages/* .
+          git add sonarqube-report
+          git commit -m "chore(report): update changed sonar reports on ${{ github.sha }}" || echo "No changes to commit"
+          git push origin reports
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
