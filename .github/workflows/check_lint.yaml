@@ -80,12 +80,10 @@ jobs:
         run: yarn global add sonar-report
 
       - name: Generate HTML report for backend1
-        run: |
-          mkdir -p sonar-report
-          sonar-report -k backend1 \
-                       -t ${{ secrets.SONAR_TOKEN }} \
-                       -u ${{ secrets.SONAR_HOST_URL }} \
-                       -o sonar-report/backend-1-report.html
+        run: npx sonar-report -k backend1 \
+          -t ${{ secrets.SONAR_TOKEN }} \
+          -u ${{ secrets.SONAR_HOST_URL }} \
+          -o ../sonar-report/backend-1-report.html
 
       - name: Upload HTML report for backend1
         uses: actions/upload-artifact@v4
@@ -140,12 +138,10 @@ jobs:
         run: yarn global add sonar-report
 
       - name: Generate HTML report for backend2
-        run: |
-          mkdir -p sonar-report
-          sonar-report -k backend2 \
-                       -t ${{ secrets.SONAR_TOKEN }} \
-                       -u ${{ secrets.SONAR_HOST_URL }} \
-                       -o sonar-report/backend-2-report.html
+        run: npx sonar-report -k backend2 \
+          -t ${{ secrets.SONAR_TOKEN }} \
+          -u ${{ secrets.SONAR_HOST_URL }} \
+          -o ../sonar-report/backend-2-report.html
 
       - name: Upload HTML report for backend2
         uses: actions/upload-artifact@v4
@@ -200,12 +196,10 @@ jobs:
         run: yarn global add sonar-report
 
       - name: Generate HTML report for frontend
-        run: |
-          mkdir -p sonar-report
-          sonar-report -k frontend \
-                       -t ${{ secrets.SONAR_TOKEN }} \
-                       -u ${{ secrets.SONAR_HOST_URL }} \
-                       -o sonar-report/frontend-report.html
+        run: npx sonar-report -k frontend \
+          -t ${{ secrets.SONAR_TOKEN }} \
+          -u ${{ secrets.SONAR_HOST_URL }} \
+          -o ../sonar-report/frontend-report.html
 
       - name: Upload HTML report for frontend
         uses: actions/upload-artifact@v4
