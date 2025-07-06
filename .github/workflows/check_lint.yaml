@@ -44,7 +44,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: "lts/*"
           cache: "yarn"
           cache-dependency-path: backend1/yarn.lock
 
@@ -74,8 +74,8 @@ jobs:
       - name: Generate HTML report for backend1
         run: |
           mkdir -p sonar-report
-          SONAR_TOKEN=${{ secrets.SONAR_TOKEN }} \
-          SONAR_HOST_URL=${{ secrets.SONAR_HOST_URL }} \
+          export SONAR_TOKEN=${{ secrets.SONAR_TOKEN }}
+          export SONAR_HOST_URL=${{ secrets.SONAR_HOST_URL }}
           npx sonar-report --project backend1 \
                            --output sonar-report/backend-1-report.html
 
@@ -96,7 +96,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: "lts/*"
           cache: "yarn"
           cache-dependency-path: backend2/yarn.lock
 
@@ -126,8 +126,8 @@ jobs:
       - name: Generate HTML report for backend2
         run: |
           mkdir -p sonar-report
-          SONAR_TOKEN=${{ secrets.SONAR_TOKEN }} \
-          SONAR_HOST_URL=${{ secrets.SONAR_HOST_URL }} \
+          export SONAR_TOKEN=${{ secrets.SONAR_TOKEN }}
+          export SONAR_HOST_URL=${{ secrets.SONAR_HOST_URL }}
           npx sonar-report --project backend2 \
                            --output sonar-report/backend-2-report.html
 
@@ -148,7 +148,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: "lts/*"
           cache: "yarn"
           cache-dependency-path: frontend/yarn.lock
 
@@ -178,8 +178,8 @@ jobs:
       - name: Generate HTML report for frontend
         run: |
           mkdir -p sonar-report
-          SONAR_TOKEN=${{ secrets.SONAR_TOKEN }} \
-          SONAR_HOST_URL=${{ secrets.SONAR_HOST_URL }} \
+          export SONAR_TOKEN=${{ secrets.SONAR_TOKEN }}
+          export SONAR_HOST_URL=${{ secrets.SONAR_HOST_URL }}
           npx sonar-report --project frontend \
                            --output sonar-report/frontend-report.html
 
