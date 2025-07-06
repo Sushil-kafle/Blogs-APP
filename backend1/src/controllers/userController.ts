@@ -26,8 +26,8 @@ export const getUserById = (
 export const addUser = (req: Request, res: Response, next: NextFunction) => {
   // ClerkExpressRequireAuth middleware attaches userId to req.auth.userId
   const clerkUserId = (req as any).auth?.userId;
-  console.log("clerkid",clerkUserId);
-  
+  console.log("clerkid", clerkUserId);
+
   const { firstName, lastName } = req.body;
 
   if (!clerkUserId || !firstName || !lastName) {
@@ -40,3 +40,4 @@ export const addUser = (req: Request, res: Response, next: NextFunction) => {
     .then((result) => res.status(201).json(result))
     .catch((err) => next(err));
 };
+// 

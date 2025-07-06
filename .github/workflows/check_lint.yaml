@@ -1,7 +1,7 @@
-name: Lint the Code
+name: Lint and Sonar Report
 
 permissions:
-  contents: read
+  contents: write
   pull-requests: read
 
 on:
@@ -27,17 +27,16 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           filters: |
             backend1:
-              - 'backend1/**'
+              - 'backend1/src/**'
             backend2:
-              - 'backend2/**'
+              - 'backend2/src/**'
             frontend:
-              - 'frontend/**'
+              - 'frontend/src/**'
 
-  lint-backend1:
+  lint-and-scan-backend1:
     needs: detect-changes
     if: needs.detect-changes.outputs.backend1 == 'true'
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
 
@@ -52,15 +51,61 @@ jobs:
         working-directory: backend1
         run: yarn install --frozen-lockfile
 
-      - name: Lint Backend1
+      - name: Lint backend1
         working-directory: backend1
         run: yarn lint
 
-  lint-backend2:
+      - name: SonarQube Scan for backend1
+        uses: sonarsource/sonarqube-scan-action@v2
+        with:
+          projectBaseDir: backend1
+          args: >
+            -Dsonar.projectKey=backend1
+            -Dsonar.projectName=backend1
+            -Dsonar.sources=src
+            -Dsonar.exclusions=**/node_modules/**
+            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+            -Dsonar.qualitygate.wait=true
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
+      - name: Setup Node.js 18 for sonar-report
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install sonar-report
+        run: npm install -g sonar-report@3.1.6
+
+      - name: Generate Sonar HTML Report for backend1
+        run: |
+          mkdir -p sonar-report
+          sonar-report \
+            --sonarurl="${{ secrets.SONAR_HOST_URL }}" \
+            --sonartoken="${{ secrets.SONAR_TOKEN }}" \
+            --sonarcomponent="backend1" \
+            --project="backend1" \
+            --application="backend1" \
+            --release="1.0.0" \
+            --branch="main" \
+            --output="sonar-report/backend1-report.html" \
+            --allbugs \
+            --coverage \
+            --quality-gate-status \
+            --no-rules-in-report \
+            --link-issues
+
+      - name: Upload HTML report for backend1
+        uses: actions/upload-artifact@v4
+        with:
+          name: sonar-report-backend1
+          path: sonar-report/backend1-report.html
+
+  lint-and-scan-backend2:
     needs: detect-changes
     if: needs.detect-changes.outputs.backend2 == 'true'
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
 
@@ -75,15 +120,61 @@ jobs:
         working-directory: backend2
         run: yarn install --frozen-lockfile
 
-      - name: Lint Backend2
+      - name: Lint backend2
         working-directory: backend2
         run: yarn lint
 
-  lint-frontend:
+      - name: SonarQube Scan for backend2
+        uses: sonarsource/sonarqube-scan-action@v2
+        with:
+          projectBaseDir: backend2
+          args: >
+            -Dsonar.projectKey=backend2
+            -Dsonar.projectName=backend2
+            -Dsonar.sources=src
+            -Dsonar.exclusions=**/node_modules/**
+            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+            -Dsonar.qualitygate.wait=true
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
+      - name: Setup Node.js 18 for sonar-report
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install sonar-report
+        run: npm install -g sonar-report@3.1.6
+
+      - name: Generate Sonar HTML Report for backend2
+        run: |
+          mkdir -p sonar-report
+          sonar-report \
+            --sonarurl="${{ secrets.SONAR_HOST_URL }}" \
+            --sonartoken="${{ secrets.SONAR_TOKEN }}" \
+            --sonarcomponent="backend2" \
+            --project="backend2" \
+            --application="backend2" \
+            --release="1.0.0" \
+            --branch="main" \
+            --output="sonar-report/backend2-report.html" \
+            --allbugs \
+            --coverage \
+            --quality-gate-status \
+            --no-rules-in-report \
+            --link-issues
+
+      - name: Upload HTML report for backend2
+        uses: actions/upload-artifact@v4
+        with:
+          name: sonar-report-backend2
+          path: sonar-report/backend2-report.html
+
+  lint-and-scan-frontend:
     needs: detect-changes
     if: needs.detect-changes.outputs.frontend == 'true'
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
 
@@ -98,6 +189,110 @@ jobs:
         working-directory: frontend
         run: yarn install --frozen-lockfile
 
-      - name: Lint Frontend
+      - name: Lint frontend
         working-directory: frontend
         run: yarn lint
+
+      - name: SonarQube Scan for frontend
+        uses: sonarsource/sonarqube-scan-action@v2
+        with:
+          projectBaseDir: frontend
+          args: >
+            -Dsonar.projectKey=frontend
+            -Dsonar.projectName=frontend
+            -Dsonar.sources=src
+            -Dsonar.exclusions=**/node_modules/**
+            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+            -Dsonar.qualitygate.wait=true
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
+      - name: Setup Node.js 18 for sonar-report
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install sonar-report
+        run: npm install -g sonar-report@3.1.6
+
+      - name: Generate Sonar HTML Report for frontend
+        run: |
+          mkdir -p sonar-report
+          sonar-report \
+              --sonarurl="${{ secrets.SONAR_HOST_URL }}" \
+              --sonartoken="${{ secrets.SONAR_TOKEN }}" \
+              --sonarcomponent="frontend" \
+              --project="frontend" \
+              --application="frontend" \
+              --release="1.0.0" \
+              --branch="main" \
+              --output="sonar-report/frontend-report.html" \
+              --allbugs \
+              --coverage \
+              --quality-gate-status \
+              --no-rules-in-report \
+              --link-issues
+
+      - name: Upload HTML report for frontend
+        uses: actions/upload-artifact@v4
+        with:
+          name: sonar-report-frontend
+          path: sonar-report/frontend-report.html
+
+  upload-sonar-reports:
+    needs:
+      - lint-and-scan-backend1
+      - lint-and-scan-backend2
+      - lint-and-scan-frontend
+      - detect-changes
+    if: always()
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Prepare reports folder
+        run: mkdir -p gh-pages/sonarqube-report
+
+      - name: Copy backend1 report
+        if: needs.detect-changes.outputs.backend1 == 'true'
+        run: |
+          mkdir -p gh-pages/sonarqube-report/backend1
+          cp artifacts/sonar-report-backend1/backend1-report.html gh-pages/sonarqube-report/backend1/index.html
+
+      - name: Copy backend2 report
+        if: needs.detect-changes.outputs.backend2 == 'true'
+        run: |
+          mkdir -p gh-pages/sonarqube-report/backend2
+          cp artifacts/sonar-report-backend2/backend2-report.html gh-pages/sonarqube-report/backend2/index.html
+
+      - name: Copy frontend report
+        if: needs.detect-changes.outputs.frontend == 'true'
+        run: |
+          mkdir -p gh-pages/sonarqube-report/frontend
+          cp artifacts/sonar-report-frontend/frontend-report.html gh-pages/sonarqube-report/frontend/index.html
+
+      - name: Publish to report branch
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin reports || true
+          git switch reports || git switch --orphan reports
+
+          cp -r gh-pages/* .
+          git add sonarqube-report
+          git commit -m "chore(report): update changed sonar reports on ${{ github.sha }}" || echo "No changes to commit"
+          git push origin reports
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
