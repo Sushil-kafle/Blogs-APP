@@ -79,11 +79,14 @@ jobs:
         run: npm install -g sonar-report@3.1.6
 
       - name: Generate Sonar HTML Report for backend1
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           mkdir -p sonar-report
           sonar-report \
             --sonarurl="${{ secrets.SONAR_HOST_URL }}" \
             --sonarcomponent="backend1" \
+            --sonarorganization="your-org" \
             --project="backend1" \
             --application="backend1" \
             --release="1.0.0" \
@@ -142,11 +145,14 @@ jobs:
         run: npm install -g sonar-report@3.1.6
 
       - name: Generate Sonar HTML Report for backend2
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           mkdir -p sonar-report
           sonar-report \
             --sonarurl="${{ secrets.SONAR_HOST_URL }}" \
             --sonarcomponent="backend2" \
+            --sonarorganization="your-org" \
             --project="backend2" \
             --application="backend2" \
             --release="1.0.0" \
@@ -205,11 +211,14 @@ jobs:
         run: npm install -g sonar-report@3.1.6
 
       - name: Generate Sonar HTML Report for frontend
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           mkdir -p sonar-report
           sonar-report \
             --sonarurl="${{ secrets.SONAR_HOST_URL }}" \
             --sonarcomponent="frontend" \
+            --sonarorganization="your-org" \
             --project="frontend" \
             --application="frontend" \
             --release="1.0.0" \
