@@ -1,4 +1,4 @@
-name: Lint the Code
+name: Lint and Sonar Report
 
 permissions:
   contents: read
@@ -37,7 +37,6 @@ jobs:
     needs: detect-changes
     if: needs.detect-changes.outputs.backend1 == 'true'
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
 
@@ -62,7 +61,7 @@ jobs:
           projectBaseDir: backend1
           args: >
             -Dsonar.projectKey=backend1
-            -Dsonar.projectName=Backend1
+            -Dsonar.projectName=backend1
             -Dsonar.sources=src
             -Dsonar.exclusions=**/node_modules/**
             -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
@@ -71,25 +70,36 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
-      - name: Generate HTML report for backend1
+      - name: Setup Node.js 18 for sonar-report
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install sonar-report
+        run: npm install -g sonar-report@3.1.6
+
+      - name: Generate Sonar HTML Report for backend1
         run: |
           mkdir -p sonar-report
-          export SONAR_TOKEN=${{ secrets.SONAR_TOKEN }}
-          export SONAR_HOST_URL=${{ secrets.SONAR_HOST_URL }}
-          npx sonar-report --project backend1 \
-                           --output sonar-report/backend-1-report.html
+          sonar-report \
+            --sonarurl="${{ secrets.SONAR_HOST_URL }}" \
+            --sonarcomponent="backend1" \
+            --project="backend1" \
+            --application="backend1" \
+            --release="1.0.0" \
+            --branch="${{ github.head_ref || github.ref_name }}" \
+            --output="sonar-report/backend1-report.html"
 
       - name: Upload HTML report for backend1
         uses: actions/upload-artifact@v4
         with:
           name: sonar-report-backend1
-          path: sonar-report/backend-1-report.html
+          path: sonar-report/backend1-report.html
 
   lint-and-scan-backend2:
     needs: detect-changes
     if: needs.detect-changes.outputs.backend2 == 'true'
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
 
@@ -114,7 +124,7 @@ jobs:
           projectBaseDir: backend2
           args: >
             -Dsonar.projectKey=backend2
-            -Dsonar.projectName=Backend2
+            -Dsonar.projectName=backend2
             -Dsonar.sources=src
             -Dsonar.exclusions=**/node_modules/**
             -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
@@ -123,25 +133,36 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
-      - name: Generate HTML report for backend2
+      - name: Setup Node.js 18 for sonar-report
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install sonar-report
+        run: npm install -g sonar-report@3.1.6
+
+      - name: Generate Sonar HTML Report for backend2
         run: |
           mkdir -p sonar-report
-          export SONAR_TOKEN=${{ secrets.SONAR_TOKEN }}
-          export SONAR_HOST_URL=${{ secrets.SONAR_HOST_URL }}
-          npx sonar-report --project backend2 \
-                           --output sonar-report/backend-2-report.html
+          sonar-report \
+            --sonarurl="${{ secrets.SONAR_HOST_URL }}" \
+            --sonarcomponent="backend2" \
+            --project="backend2" \
+            --application="backend2" \
+            --release="1.0.0" \
+            --branch="${{ github.head_ref || github.ref_name }}" \
+            --output="sonar-report/backend2-report.html"
 
       - name: Upload HTML report for backend2
         uses: actions/upload-artifact@v4
         with:
           name: sonar-report-backend2
-          path: sonar-report/backend-2-report.html
+          path: sonar-report/backend2-report.html
 
   lint-and-scan-frontend:
     needs: detect-changes
     if: needs.detect-changes.outputs.frontend == 'true'
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
 
@@ -166,7 +187,7 @@ jobs:
           projectBaseDir: frontend
           args: >
             -Dsonar.projectKey=frontend
-            -Dsonar.projectName=Frontend
+            -Dsonar.projectName=frontend
             -Dsonar.sources=src
             -Dsonar.exclusions=**/node_modules/**
             -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
@@ -175,13 +196,25 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
-      - name: Generate HTML report for frontend
+      - name: Setup Node.js 18 for sonar-report
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install sonar-report
+        run: npm install -g sonar-report@3.1.6
+
+      - name: Generate Sonar HTML Report for frontend
         run: |
           mkdir -p sonar-report
-          export SONAR_TOKEN=${{ secrets.SONAR_TOKEN }}
-          export SONAR_HOST_URL=${{ secrets.SONAR_HOST_URL }}
-          npx sonar-report --project frontend \
-                           --output sonar-report/frontend-report.html
+          sonar-report \
+            --sonarurl="${{ secrets.SONAR_HOST_URL }}" \
+            --sonarcomponent="frontend" \
+            --project="frontend" \
+            --application="frontend" \
+            --release="1.0.0" \
+            --branch="${{ github.head_ref || github.ref_name }}" \
+            --output="sonar-report/frontend-report.html"
 
       - name: Upload HTML report for frontend
         uses: actions/upload-artifact@v4
