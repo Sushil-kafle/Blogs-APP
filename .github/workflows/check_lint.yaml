@@ -1,7 +1,7 @@
 name: Lint and Sonar Report
 
 permissions:
-  contents: read
+  contents: write
   pull-requests: read
 
 on:
@@ -248,9 +248,14 @@ jobs:
       - detect-changes
     if: always()
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Download artifacts
         uses: actions/download-artifact@v4
@@ -278,20 +283,16 @@ jobs:
           mkdir -p gh-pages/sonarqube-report/frontend
           cp artifacts/sonar-report-frontend/frontend-report.html gh-pages/sonarqube-report/frontend/index.html
 
-      - name: Publish to reports branch
-        env:
-          LF_PAT_TOKEN: ${{ secrets.LF_PAT_TOKEN }}
+      - name: Publish to report branch
         run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
-
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git fetch origin reports || true
-          git switch reports
+          git switch reports || git switch --orphan reports
 
           cp -r gh-pages/* .
-
           git add sonarqube-report
           git commit -m "chore(report): update changed sonar reports on ${{ github.sha }}" || echo "No changes to commit"
-
-          git remote set-url origin https://x-access-token:${LF_PAT_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
           git push origin reports
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
