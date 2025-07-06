@@ -33,6 +33,12 @@ jobs:
             frontend:
               - 'frontend/**'
 
+      - name: Debug Filter Outputs
+        run: |
+          echo "backend1: ${{ steps.filter.outputs.backend1 }}"
+          echo "backend2: ${{ steps.filter.outputs.backend2 }}"
+          echo "frontend: ${{ steps.filter.outputs.frontend }}"
+
   build-and-push-backend1:
     needs: detect-changes
     if: needs.detect-changes.outputs.backend1 == 'true'
