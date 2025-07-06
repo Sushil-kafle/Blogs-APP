@@ -288,6 +288,8 @@ jobs:
           cp -r gh-pages/* .
           git add sonarqube-report
           git commit -m "chore(report): update changed sonar reports on ${{ github.sha }}" || echo "No changes to commit"
+          git remote set-url origin https://x-access-token:${{ secrets.GH_PAT_TOKEN }}@github.com/${{ github.repository }}.git
+
           git push origin reports
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT_TOKEN }}
+          GH_PAT_TOKEN: ${{ secrets.GH_PAT_TOKEN }}
