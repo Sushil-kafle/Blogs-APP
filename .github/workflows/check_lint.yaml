@@ -290,4 +290,4 @@ jobs:
           git commit -m "chore(report): update changed sonar reports on ${{ github.sha }}" || echo "No changes to commit"
           git push origin reports
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT_TOKEN }}
