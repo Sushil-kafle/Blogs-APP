@@ -216,7 +216,7 @@ jobs:
             --project="frontend" \
             --application="frontend" \
             --release="1.0.0" \
-            --branch="main \
+            --branch="main" \
             --output="sonar-report/frontend-report.html"
 
       - name: Upload HTML report for frontend
