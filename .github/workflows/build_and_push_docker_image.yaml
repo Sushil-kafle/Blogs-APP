@@ -32,7 +32,6 @@ jobs:
               - 'backend2/**'
             frontend:
               - 'frontend/**'
-              -
       - name: Determine Merge Base
         run: |
           MERGE_BASE=$(git merge-base origin/dev HEAD)
