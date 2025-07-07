@@ -1,3 +1,12 @@
+## [1.0.2](https://github.com/Sushil-kafle/Blogs-APP/compare/backend1-v1.0.1...backend1-v1.0.2) (2025-07-07)
+
+
+### Bug Fixes
+
+* release tag ([6a3bdf3](https://github.com/Sushil-kafle/Blogs-APP/commit/6a3bdf32342f583a350ec501645ae4953abcc808))
+* release tag ([51fa477](https://github.com/Sushil-kafle/Blogs-APP/commit/51fa4771dfe89bd465d03995db3761130f80cf08))
+* release yaml ([89d8c39](https://github.com/Sushil-kafle/Blogs-APP/commit/89d8c39470281259be58e6b0e77a17773882f027))
+
 ## [1.0.1](https://github.com/Sushil-kafle/Blogs-APP/compare/backend1-v1.0.0...backend1-v1.0.1) (2025-07-07)
 
 
