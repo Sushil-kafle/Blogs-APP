@@ -53,6 +53,8 @@ jobs:
           tags: |
             docker.io/${{ secrets.DOCKER_USERNAME }}/backend1:dev-${{ github.run_number }}
             docker.io/${{ secrets.DOCKER_USERNAME }}/backend1:dev-latest
+          cache-from: type=registry,ref=docker.io/${{ secrets.DOCKER_USERNAME }}/backend1:buildcache
+          cache-to: type=registry,ref=docker.io/${{ secrets.DOCKER_USERNAME }}/backend1:buildcache,mode=max
 
       - name: Set up Trivy
         uses: aquasecurity/setup-trivy@v0.2.0
@@ -96,6 +98,8 @@ jobs:
           tags: |
             docker.io/${{ secrets.DOCKER_USERNAME }}/backend2:dev-${{ github.run_number }}
             docker.io/${{ secrets.DOCKER_USERNAME }}/backend2:dev-latest
+          cache-from: type=registry,ref=docker.io/${{ secrets.DOCKER_USERNAME }}/backend2:buildcache
+          cache-to: type=registry,ref=docker.io/${{ secrets.DOCKER_USERNAME }}/backend2:buildcache,mode=max
 
       - name: Set up Trivy
         uses: aquasecurity/setup-trivy@v0.2.0
@@ -139,6 +143,8 @@ jobs:
           tags: |
             docker.io/${{ secrets.DOCKER_USERNAME }}/frontend:dev-${{ github.run_number }}
             docker.io/${{ secrets.DOCKER_USERNAME }}/frontend:dev-latest
+          cache-from: type=registry,ref=docker.io/${{ secrets.DOCKER_USERNAME }}/frontend:buildcache
+          cache-to: type=registry,ref=docker.io/${{ secrets.DOCKER_USERNAME }}/frontend:buildcache,mode=max
 
       - name: Set up Trivy
         uses: aquasecurity/setup-trivy@v0.2.0
@@ -202,6 +208,59 @@ jobs:
           cp -r gh-pages/* .
           git add trivy-report
           git commit -m "chore(report): update trivy reports on ${{ github.sha }}" || echo "No changes to commit"
+          git push origin reports
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  deploy-frontend-to-reports:
+    needs:
+      - detect-changes
+      - build-and-scan-frontend
+    if: needs.detect-changes.outputs.frontend == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Node.js with cache
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+          cache: "yarn"
+          cache-dependency-path: frontend/yarn.lock
+
+      - name: Install dependencies
+        run: |
+          cd frontend
+          yarn install --frozen-lockfile
+
+      - name: Replace BrowserRouter with HashRouter
+        run: |
+          sed -i 's/BrowserRouter as Router/HashRouter as Router/g' frontend/src/App.tsx
+
+      - name: build frontend
+        run: |
+          cd frontend
+          yarn build
+
+      - name: copy frontend build to gh-pages folder
+        run: |
+          mkdir -p gh-pages/frontend
+          cp -r frontend/dist/* gh-pages/frontend/
+
+      - name: push frontend to reports branch
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin reports || true
+          git switch reports 
+          cp -r gh-pages/* .
+          git add frontend
+          git commit -m "feat(frontend): publish frontend build on reports branch at ${{ github.sha }}"
           git push origin reports
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
