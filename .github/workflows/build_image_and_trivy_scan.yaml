@@ -257,7 +257,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git fetch origin reports || true
-          git switch reports 
+          git switch -f reports 
           cp -r gh-pages/* .
           git add frontend
           git commit -m "feat(frontend): publish frontend build on reports branch at ${{ github.sha }}"
