@@ -19,7 +19,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Box sx={{ minHeight: "100vh", width: '100%', bgcolor: "#f5f5f5" }}>
-          <Router basename={basename}>
+          <Router basename="/Blogs-APP/frontend/">
             <Routes>
               <Route path="/" element={<Navigate to="/blogs" replace />} />
               <Route path="/blogs" element={<AllBlogs />} />

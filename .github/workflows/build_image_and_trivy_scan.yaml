@@ -211,7 +211,6 @@ jobs:
           git push origin reports
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
   deploy-frontend-to-reports:
     needs:
       - detect-changes
@@ -238,27 +237,33 @@ jobs:
           cd frontend
           yarn install --frozen-lockfile
 
-      - name: build frontend
+      - name: Build frontend
         env:
           VITE_BASE_PATH: /Blogs-APP/frontend/
         run: |
           cd frontend
           yarn build
 
-      - name: copy frontend build to gh-pages folder
+      - name: Copy frontend build to gh-pages folder
         run: |
           mkdir -p gh-pages/frontend
           cp -r frontend/dist/* gh-pages/frontend/
 
-      - name: push frontend to reports branch
+      - name: Push frontend to reports branch
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
           git fetch origin reports || true
-          git switch -f reports 
-          cp -r gh-pages/* .
+          git switch -f reports
+
+          rm -rf frontend
+          mkdir -p frontend
+
+          cp -r gh-pages/frontend/* frontend/
+
           git add frontend
-          git commit -m "feat(frontend): publish frontend build on reports branch at ${{ github.sha }}"
+          git commit -m "feat(frontend): publish frontend build on reports branch at ${{ github.sha }}" || echo "No changes to commit"
           git push origin reports
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
