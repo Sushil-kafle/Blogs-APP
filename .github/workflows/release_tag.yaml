@@ -53,11 +53,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "lts/*"
-          cache: "npm"
-          cache-dependency-path: frontend/package-lock.json
+          cache: "yarn"
+          cache-dependency-path: frontend/yarn.lock
 
       - name: Install dependencies
-        run: npm ci
+        run: yarn install --frozen-lockfile
 
       - name: Release Frontend
         run: npx semantic-release
@@ -78,11 +78,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "lts/*"
-          cache: "npm"
-          cache-dependency-path: backend1/package-lock.json
+          cache: "yarn"
+          cache-dependency-path: backend1/yarn.lock
 
       - name: Install dependencies
-        run: npm ci
+        run: yarn install --frozen-lockfile
 
       - name: Release Backend1
         run: npx semantic-release
@@ -103,11 +103,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "lts/*"
-          cache: "npm"
-          cache-dependency-path: backend2/package-lock.json
+          cache: "yarn"
+          cache-dependency-path: backend2/yarn.lock
 
       - name: Install dependencies
-        run: npm ci
+        run: yarn install --frozen-lockfile
 
       - name: Release Backend2
         run: npx semantic-release
