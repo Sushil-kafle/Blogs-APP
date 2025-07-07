@@ -1,3 +1,22 @@
+## [1.0.1](https://github.com/Sushil-kafle/Blogs-APP/compare/backend2-v1.0.0...backend2-v1.0.1) (2025-07-07)
+
+
+### Bug Fixes
+
+* docker image on prod ([86c8978](https://github.com/Sushil-kafle/Blogs-APP/commit/86c8978428e8730037073f3bedf707cc6f624f74))
+* docker image on prod ([c8cc4fa](https://github.com/Sushil-kafle/Blogs-APP/commit/c8cc4faf88b52c2ee03b09cd6982e279540b8e1c))
+* release to main ([a8a2bc2](https://github.com/Sushil-kafle/Blogs-APP/commit/a8a2bc2943d9aa176635ec9c53d4ac68549ba330))
+* release to main ([0eddc9a](https://github.com/Sushil-kafle/Blogs-APP/commit/0eddc9ab20348ac2ab487c5b77409067c73a65e3))
+* release to main ([7a0bbaf](https://github.com/Sushil-kafle/Blogs-APP/commit/7a0bbafc0712ffdd372373ce8ce49a9732f84f4d))
+* release to main ([7b87496](https://github.com/Sushil-kafle/Blogs-APP/commit/7b87496fc7ed579c3d2844e3283f40cac2dd0f62))
+* release to main ([21c21aa](https://github.com/Sushil-kafle/Blogs-APP/commit/21c21aa3000f79c4dc151f4bf53e6dc3d08d68d6))
+* release to main ([68202a0](https://github.com/Sushil-kafle/Blogs-APP/commit/68202a06bf28f1318ce0a9bb425690f2e80eb65d))
+* release to main ([68ec0d5](https://github.com/Sushil-kafle/Blogs-APP/commit/68ec0d5c81a78208968863fdd8b732a5c57ffaf4))
+* release to main ([580faf8](https://github.com/Sushil-kafle/Blogs-APP/commit/580faf8f2f772ba8c62d32a35f9cf611e8e92aa7))
+* release yaml ([f590cf2](https://github.com/Sushil-kafle/Blogs-APP/commit/f590cf2fbe68a467d86fa3fbf95e6ce543993700))
+* release yaml ([73180fc](https://github.com/Sushil-kafle/Blogs-APP/commit/73180fc850f389f5eaeea0064da1b3c354866d4b))
+* release yaml ([cb2ffcf](https://github.com/Sushil-kafle/Blogs-APP/commit/cb2ffcf898fc34fcc5d4c3cdba1a6f723ae844cd))
+
 # 1.0.0 (2025-07-07)
 
 
