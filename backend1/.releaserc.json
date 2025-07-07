@@ -17,5 +17,5 @@
             }
         ]
     ],
-    "tagFormat": "backend1@-v${version}"
+    "tagFormat": "backend1-v${version}"
 }
