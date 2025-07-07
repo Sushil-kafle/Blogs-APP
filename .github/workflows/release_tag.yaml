@@ -1,0 +1,115 @@
+name: release
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      backend1: ${{ steps.filter.outputs.backend1 }}
+      backend2: ${{ steps.filter.outputs.backend2 }}
+      frontend: ${{ steps.filter.outputs.frontend }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get Previous Commit
+        id: prev-commit
+        run: echo "PREV_COMMIT=$(git rev-parse HEAD^1)" >> $GITHUB_ENV
+
+      - name: Detect Changes
+        id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          base: ${{ env.PREV_COMMIT }}
+          filters: |
+            backend1:
+              - 'backend1/**'
+            backend2:
+              - 'backend2/**'
+            frontend:
+              - 'frontend/**'
+
+  release-frontend:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.frontend == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+          cache: "npm"
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Release Frontend
+        run: npx semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  release-backend1:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.backend1 == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend1
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+          cache: "npm"
+          cache-dependency-path: backend1/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Release Backend1
+        run: npx semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  release-backend2:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.backend2 == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend2
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+          cache: "npm"
+          cache-dependency-path: backend2/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Release Backend2
+        run: npx semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
