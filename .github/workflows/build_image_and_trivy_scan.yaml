@@ -238,11 +238,9 @@ jobs:
           cd frontend
           yarn install --frozen-lockfile
 
-      - name: Replace BrowserRouter with HashRouter
-        run: |
-          sed -i 's/BrowserRouter as Router/HashRouter as Router/g' frontend/src/App.tsx
-
       - name: build frontend
+        env:
+          VITE_BASE_PATH: /Blogs-APP/frontend/
         run: |
           cd frontend
           yarn build
