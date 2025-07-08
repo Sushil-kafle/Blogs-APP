@@ -29,13 +29,3 @@ jobs:
       - name: validate current commit
         if: github.event_name == 'push'
         run: npx commitlint --last --verbose
-
-  deploy:
-    runs-on: [self-hosted, backend]
-
-    steps:
-      - name: SSH and deploy
-        run: |
-          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
-            cd /home/susil/prod
-            touch 1.txt
