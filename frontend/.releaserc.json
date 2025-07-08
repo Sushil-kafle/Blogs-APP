@@ -18,5 +18,5 @@
             }
         ]
     ],
-    "tagFormat": "backend2-v${version}"
+    "tagFormat": "frontend-v${version}"
 }
