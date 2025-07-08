@@ -38,7 +38,6 @@ jobs:
               - 'backend2/**'
             frontend:
               - 'frontend/**'
-
   release-backend1:
     needs: detect-changes
     if: needs.detect-changes.outputs.backend1 == 'true'
@@ -47,7 +46,7 @@ jobs:
       run:
         working-directory: backend1
     outputs:
-      version: ${{ steps.release.outputs.new_release_version }}
+      version: ${{ steps.get-version.outputs.version }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -69,8 +68,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Get version from package.json
+        id: get-version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
   build-and-push-backend1:
     needs: release-backend1
+    if: needs.detect-changes.outputs.backend1 == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -101,7 +106,7 @@ jobs:
       run:
         working-directory: backend2
     outputs:
-      version: ${{ steps.release.outputs.new_release_version }}
+      version: ${{ steps.get-version.outputs.version }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -124,8 +129,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Get version from package.json
+        id: get-version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
   build-and-push-backend2:
     needs: release-backend2
+    if: needs.detect-changes.outputs.backend2 == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -156,7 +167,7 @@ jobs:
       run:
         working-directory: frontend
     outputs:
-      version: ${{ steps.release.outputs.new_release_version }}
+      version: ${{ steps.get-version.outputs.version }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -178,8 +189,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Get version from package.json
+        id: get-version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
   build-and-push-frontend:
     needs: release-frontend
+    if: needs.detect-changes.outputs.frontend == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
