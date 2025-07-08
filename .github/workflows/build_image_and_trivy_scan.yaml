@@ -1,4 +1,5 @@
 name: Build, Scan and Push Docker Images
+
 permissions:
   contents: write
 
@@ -18,9 +19,11 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
       - name: Get Previous Commit
         id: prev-commit
         run: echo "PREV_COMMIT=$(git rev-parse HEAD^1)" >> $GITHUB_ENV
+
       - name: Detect Changed Files
         id: filter
         uses: dorny/paths-filter@v3
@@ -42,21 +45,22 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Sanitize branch name
-        id: vars
         run: echo "BRANCH_NAME_SANITIZED=${GITHUB_REF_NAME//\//-}" >> $GITHUB_ENV
 
       - uses: docker/setup-buildx-action@v3
+
       - uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+
       - uses: docker/build-push-action@v5
         with:
           context: backend1
           file: backend1/Dockerfile
           push: true
           tags: |
-            docker.io/${{ secrets.DOCKER_USERNAME }}/backend1-dev:${{ env.BRANCH_NAME_SANITIZED }}-${{ github.sha::7 }}
+            docker.io/${{ secrets.DOCKER_USERNAME }}/backend1-dev:${{ env.BRANCH_NAME_SANITIZED }}-${{ github.sha }}
             docker.io/${{ secrets.DOCKER_USERNAME }}/backend1-dev:dev-latest
           cache-from: type=registry,ref=docker.io/${{ secrets.DOCKER_USERNAME }}/backend1-dev:buildcache
           cache-to: type=registry,ref=docker.io/${{ secrets.DOCKER_USERNAME }}/backend1-dev:buildcache,mode=max
@@ -67,17 +71,16 @@ jobs:
           version: v0.64.1
 
       - name: Download Trivy HTML template
-        run: curl -o html.tpl https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl
+        run: curl -sSL -o html.tpl https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl
 
       - name: Run Trivy HTML Scan
         run: |
           trivy image --format template --template @html.tpl \
             -o backend1-trivy-report.html \
-            docker.io/${{ secrets.DOCKER_USERNAME }}/backend1-dev:${{ env.BRANCH_NAME_SANITIZED }}-${{ github.sha::7 }}
+            docker.io/${{ secrets.DOCKER_USERNAME }}/backend1-dev:${{ env.BRANCH_NAME_SANITIZED }}-${{ github.sha }}
 
       - name: Upload Trivy HTML report
         uses: actions/upload-artifact@v4
-        if: always()
         with:
           name: trivy-report-backend1
           path: backend1-trivy-report.html
@@ -90,21 +93,22 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Sanitize branch name
-        id: vars
         run: echo "BRANCH_NAME_SANITIZED=${GITHUB_REF_NAME//\//-}" >> $GITHUB_ENV
 
       - uses: docker/setup-buildx-action@v3
+
       - uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+
       - uses: docker/build-push-action@v5
         with:
           context: backend2
           file: backend2/Dockerfile
           push: true
           tags: |
-            docker.io/${{ secrets.DOCKER_USERNAME }}/backend2-dev:${{ env.BRANCH_NAME_SANITIZED }}-${{ github.sha::7 }}
+            docker.io/${{ secrets.DOCKER_USERNAME }}/backend2-dev:${{ env.BRANCH_NAME_SANITIZED }}-${{ github.sha }}
             docker.io/${{ secrets.DOCKER_USERNAME }}/backend2-dev:dev-latest
           cache-from: type=registry,ref=docker.io/${{ secrets.DOCKER_USERNAME }}/backend2-dev:buildcache
           cache-to: type=registry,ref=docker.io/${{ secrets.DOCKER_USERNAME }}/backend2-dev:buildcache,mode=max
@@ -115,17 +119,16 @@ jobs:
           version: v0.64.1
 
       - name: Download Trivy HTML template
-        run: curl -o html.tpl https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl
+        run: curl -sSL -o html.tpl https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl
 
       - name: Run Trivy HTML Scan
         run: |
           trivy image --format template --template @html.tpl \
             -o backend2-trivy-report.html \
-            docker.io/${{ secrets.DOCKER_USERNAME }}/backend2-dev:${{ env.BRANCH_NAME_SANITIZED }}-${{ github.sha::7 }}
+            docker.io/${{ secrets.DOCKER_USERNAME }}/backend2-dev:${{ env.BRANCH_NAME_SANITIZED }}-${{ github.sha }}
 
       - name: Upload Trivy HTML report
         uses: actions/upload-artifact@v4
-        if: always()
         with:
           name: trivy-report-backend2
           path: backend2-trivy-report.html
@@ -138,21 +141,22 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Sanitize branch name
-        id: vars
         run: echo "BRANCH_NAME_SANITIZED=${GITHUB_REF_NAME//\//-}" >> $GITHUB_ENV
 
       - uses: docker/setup-buildx-action@v3
+
       - uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+
       - uses: docker/build-push-action@v5
         with:
           context: frontend
           file: frontend/Dockerfile
           push: true
           tags: |
-            docker.io/${{ secrets.DOCKER_USERNAME }}/frontend-dev:${{ env.BRANCH_NAME_SANITIZED }}-${{ github.sha::7 }}
+            docker.io/${{ secrets.DOCKER_USERNAME }}/frontend-dev:${{ env.BRANCH_NAME_SANITIZED }}-${{ github.sha }}
             docker.io/${{ secrets.DOCKER_USERNAME }}/frontend-dev:dev-latest
           cache-from: type=registry,ref=docker.io/${{ secrets.DOCKER_USERNAME }}/frontend-dev:buildcache
           cache-to: type=registry,ref=docker.io/${{ secrets.DOCKER_USERNAME }}/frontend-dev:buildcache,mode=max
@@ -163,17 +167,109 @@ jobs:
           version: v0.64.1
 
       - name: Download Trivy HTML template
-        run: curl -o html.tpl https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl
+        run: curl -sSL -o html.tpl https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl
 
       - name: Run Trivy HTML Scan
         run: |
           trivy image --format template --template @html.tpl \
             -o frontend-trivy-report.html \
-            docker.io/${{ secrets.DOCKER_USERNAME }}/frontend-dev:${{ env.BRANCH_NAME_SANITIZED }}-${{ github.sha::7 }}
+            docker.io/${{ secrets.DOCKER_USERNAME }}/frontend-dev:${{ env.BRANCH_NAME_SANITIZED }}-${{ github.sha }}
 
       - name: Upload Trivy HTML report
         uses: actions/upload-artifact@v4
-        if: always()
         with:
           name: trivy-report-frontend
           path: frontend-trivy-report.html
+
+  upload-trivy-reports:
+    needs:
+      - build-and-scan-backend1
+      - build-and-scan-backend2
+      - build-and-scan-frontend
+      - detect-changes
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - run: mkdir -p gh-pages/trivy-report
+
+      - if: needs.detect-changes.outputs.backend1 == 'true'
+        run: |
+          mkdir -p gh-pages/trivy-report/backend1
+          cp artifacts/trivy-report-backend1/backend1-trivy-report.html gh-pages/trivy-report/backend1/index.html
+
+      - if: needs.detect-changes.outputs.backend2 == 'true'
+        run: |
+          mkdir -p gh-pages/trivy-report/backend2
+          cp artifacts/trivy-report-backend2/backend2-trivy-report.html gh-pages/trivy-report/backend2/index.html
+
+      - if: needs.detect-changes.outputs.frontend == 'true'
+        run: |
+          mkdir -p gh-pages/trivy-report/frontend
+          cp artifacts/trivy-report-frontend/frontend-trivy-report.html gh-pages/trivy-report/frontend/index.html
+
+      - name: Commit and push Trivy reports
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin reports || true
+          git switch reports || git switch --orphan reports
+          cp -r gh-pages/* .
+          git add trivy-report
+          git commit -m "chore(report): update trivy reports on ${{ github.sha }}" || echo "No changes"
+          git push origin reports
+
+  deploy-frontend-to-reports:
+    needs:
+      - detect-changes
+      - build-and-scan-frontend
+    if: needs.detect-changes.outputs.frontend == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+          cache: yarn
+          cache-dependency-path: frontend/yarn.lock
+
+      - name: Install dependencies
+        run: |
+          cd frontend
+          yarn install --frozen-lockfile
+
+      - name: Build frontend
+        env:
+          VITE_BASE_PATH: /Blogs-APP/frontend/
+        run: |
+          cd frontend
+          yarn build
+
+      - name: Copy frontend build to gh-pages
+        run: |
+          mkdir -p gh-pages/frontend
+          cp -r frontend/dist/* gh-pages/frontend/
+
+      - name: Push frontend to reports branch
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin reports || true
+          git switch -f reports
+          rm -rf frontend
+          mkdir -p frontend
+          cp -r gh-pages/frontend/* frontend/
+          git add frontend
+          git commit -m "feat(frontend): publish frontend build on reports branch at ${{ github.sha }}" || echo "No changes"
+          git push origin reports
