@@ -71,7 +71,6 @@ jobs:
 
   build-and-push-backend1:
     needs: release-backend1
-    if: needs.detect-changes.outputs.backend1 == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -127,7 +126,6 @@ jobs:
 
   build-and-push-backend2:
     needs: release-backend2
-    if: needs.detect-changes.outputs.backend2 == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -182,7 +180,6 @@ jobs:
 
   build-and-push-frontend:
     needs: release-frontend
-    if: needs.detect-changes.outputs.frontend == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
