@@ -6,9 +6,9 @@ on:
 
 jobs:
   commitlint:
-    # runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
-    runs-on: [backend]
+    # runs-on: [self-hosted, backend]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -29,3 +29,18 @@ jobs:
       - name: validate current commit
         if: github.event_name == 'push'
         run: npx commitlint --last --verbose
+
+  deploy:
+    runs-on: [self-hosted, backend]
+
+    steps:
+      - name: SSH into server and deploy
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            cd /home/susil/prod
+            touch 1.txt

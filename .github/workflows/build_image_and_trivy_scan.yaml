@@ -10,8 +10,8 @@ on:
 
 jobs:
   detect-changes:
-    # runs-on: ubuntu-latest
-    runs-on: [self-hosted, backend]
+    runs-on: ubuntu-latest
+    # runs-on: [self-hosted, backend]
     outputs:
       backend1: ${{ steps.filter.outputs.backend1 }}
       backend2: ${{ steps.filter.outputs.backend2 }}
@@ -41,8 +41,8 @@ jobs:
   build-and-scan-backend1:
     needs: detect-changes
     if: needs.detect-changes.outputs.backend1 == 'true'
-    # runs-on: ubuntu-latest
-    runs-on: [self-hosted, backend]
+    runs-on: ubuntu-latest
+    # runs-on: [self-hosted, backend]
     steps:
       - uses: actions/checkout@v4
 
@@ -90,8 +90,8 @@ jobs:
   build-and-scan-backend2:
     needs: detect-changes
     if: needs.detect-changes.outputs.backend2 == 'true'
-    # runs-on: ubuntu-latest
-    runs-on: [self-hosted, backend]
+    runs-on: ubuntu-latest
+    # runs-on: [self-hosted, backend]
     steps:
       - uses: actions/checkout@v4
 
@@ -139,8 +139,8 @@ jobs:
   build-and-scan-frontend:
     needs: detect-changes
     if: needs.detect-changes.outputs.frontend == 'true'
-    # runs-on: ubuntu-latest
-    runs-on: [self-hosted, backend]
+    runs-on: ubuntu-latest
+    # runs-on: [self-hosted, backend]
     steps:
       - uses: actions/checkout@v4
 
@@ -192,8 +192,8 @@ jobs:
       - build-and-scan-frontend
       - detect-changes
     if: always()
-    # runs-on: ubuntu-latest
-    runs-on: [self-hosted, backend]
+    runs-on: ubuntu-latest
+    # runs-on: [self-hosted, backend]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -236,8 +236,8 @@ jobs:
       - detect-changes
       - build-and-scan-frontend
     if: needs.detect-changes.outputs.frontend == 'true'
-    # runs-on: ubuntu-latest
-    runs-on: [self-hosted, backend]
+    runs-on: ubuntu-latest
+    # runs-on: [self-hosted, backend]
     steps:
       - uses: actions/checkout@v4
         with:

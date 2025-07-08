@@ -12,8 +12,8 @@ permissions:
 
 jobs:
   detect-changes:
-    # runs-on: ubuntu-latest
-    runs-on: [self-hosted, backend]
+    runs-on: ubuntu-latest
+    # runs-on: [self-hosted, backend]
     outputs:
       backend1: ${{ steps.filter.outputs.backend1 }}
       backend2: ${{ steps.filter.outputs.backend2 }}
@@ -42,8 +42,8 @@ jobs:
   release-backend1:
     needs: detect-changes
     if: needs.detect-changes.outputs.backend1 == 'true'
-    # runs-on: ubuntu-latest
-    runs-on: [self-hosted, backend]
+    runs-on: ubuntu-latest
+    # runs-on: [self-hosted, backend]
     defaults:
       run:
         working-directory: backend1
@@ -78,8 +78,8 @@ jobs:
   build-and-push-backend1:
     needs: release-backend1
     if: needs.detect-changes.outputs.backend1 == 'true'
-    # runs-on: ubuntu-latest
-    runs-on: [self-hosted, backend]
+    runs-on: ubuntu-latest
+    # runs-on: [self-hosted, backend]
     steps:
       - uses: actions/checkout@v4
 
@@ -104,8 +104,8 @@ jobs:
   release-backend2:
     needs: detect-changes
     if: needs.detect-changes.outputs.backend2 == 'true'
-    # runs-on: ubuntu-latest
-    runs-on: [self-hosted, backend]
+    runs-on: ubuntu-latest
+    # runs-on: [self-hosted, backend]
     defaults:
       run:
         working-directory: backend2
@@ -141,8 +141,8 @@ jobs:
   build-and-push-backend2:
     needs: release-backend2
     if: needs.detect-changes.outputs.backend2 == 'true'
-    # runs-on: ubuntu-latest
-    runs-on: [self-hosted, backend]
+    runs-on: ubuntu-latest
+    # runs-on: [self-hosted, backend]
     steps:
       - uses: actions/checkout@v4
 
@@ -167,8 +167,8 @@ jobs:
   release-frontend:
     needs: detect-changes
     if: needs.detect-changes.outputs.frontend == 'true'
-    # runs-on: ubuntu-latest
-    runs-on: [self-hosted, backend]
+    runs-on: ubuntu-latest
+    # runs-on: [self-hosted, backend]
     defaults:
       run:
         working-directory: frontend
@@ -203,8 +203,8 @@ jobs:
   build-and-push-frontend:
     needs: release-frontend
     if: needs.detect-changes.outputs.frontend == 'true'
-    # runs-on: ubuntu-latest
-    runs-on: [self-hosted, backend]
+    runs-on: ubuntu-latest
+    # runs-on: [self-hosted, backend]
     steps:
       - uses: actions/checkout@v4
 
