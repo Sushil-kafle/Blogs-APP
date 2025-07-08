@@ -51,5 +51,6 @@
     "knex-stringcase": "^1.4.6",
     "pg": "^8.11.3",
     "winston": "^3.17.0"
-  }
+  },
+  "private": true
 }
