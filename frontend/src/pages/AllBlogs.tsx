@@ -22,7 +22,7 @@ const AllBlogs: React.FC = () => {
     return (
         <Box sx={{ minHeight: "100vh", bgcolor: "#f5f5f5" }}>
             {/* Header */}
-            <AppBar position="static" color="primary" elevation={2}>
+            <AppBar position="static" color="secondary" elevation={2}>
                 <Toolbar>
                     <Typography variant="h5" sx={{ flexGrow: 1, fontWeight: 700 }}>
                         <Link to={"/blogs"}>
@@ -145,7 +145,7 @@ const AllBlogs: React.FC = () => {
                                                 whiteSpace: "pre-line",
                                             }}
                                         >
-                                            {blog.content.substring(50,200)}
+                                            {blog.content.substring(50, 200)}
                                         </Typography>
                                     </Box>
                                     {/* Card Footer */}
@@ -186,7 +186,7 @@ const AllBlogs: React.FC = () => {
                                                 textAlign: "left",
                                             }}
                                         >
-                                            {blog.firstName} 
+                                            {blog.firstName}
                                         </Typography>
                                     </CardContent>
                                 </CardActionArea>
