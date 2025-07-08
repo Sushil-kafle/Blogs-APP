@@ -47,7 +47,7 @@ jobs:
       run:
         working-directory: backend1
     outputs:
-      version: ${{ steps.get-version.outputs.version }}
+      version: ${{ steps.release.outputs.new_release_version }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -68,12 +68,6 @@ jobs:
         run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Get version from package.json
-        id: get-version
-        run: |
-          VERSION=$(node -p "require('./package.json').version")
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
 
   build-and-push-backend1:
     needs: release-backend1
@@ -108,7 +102,7 @@ jobs:
       run:
         working-directory: backend2
     outputs:
-      version: ${{ steps.get-version.outputs.version }}
+      version: ${{ steps.release.outputs.new_release_version }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -130,12 +124,6 @@ jobs:
         run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Get version from package.json
-        id: get-version
-        run: |
-          VERSION=$(node -p "require('./package.json').version")
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
 
   build-and-push-backend2:
     needs: release-backend2
@@ -170,7 +158,7 @@ jobs:
       run:
         working-directory: frontend
     outputs:
-      version: ${{ steps.get-version.outputs.version }}
+      version: ${{ steps.release.outputs.new_release_version }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -191,12 +179,6 @@ jobs:
         run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Get version from package.json
-        id: get-version
-        run: |
-          VERSION=$(node -p "require('./package.json').version")
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
 
   build-and-push-frontend:
     needs: release-frontend
