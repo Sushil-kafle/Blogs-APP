@@ -5,6 +5,17 @@ on:
     branches:
       - main
 
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "Select backend to migrate"
+        required: true
+        default: "backend1"
+        type: choice
+        options:
+          - backend1
+          - backend2
+
 permissions:
   contents: write
   issues: write
@@ -276,3 +287,20 @@ jobs:
             cd /home/susil/prod
             docker compose pull backend2
             docker compose --profile backend2 up -d
+
+  migrate_db:
+    runs-on: [self-hosted, backend]
+    steps:
+      - name: migrate backend1
+        if: ${{ github.event.inputs.target == 'backend1' }}
+        run: |
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+            cd /home/susil/prod
+            docker compose exec backend1 yarn migrate
+
+      - name: Migrate backend2
+        if: ${{ github.event.inputs.target == 'backend2' }}
+        run: |
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+            cd /home/susil/prod
+            docker compose exec backend2 yarn migrate
